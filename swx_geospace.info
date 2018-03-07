@@ -1,0 +1,4 @@
+name = SWPC Geospace Product Page module
+description = "Support for Geospace page"
+core = 7.x
+package = swx_gov

@@ -1,0 +1,9 @@
+
+#geospace-container {
+    
+    min-height: 850px;
+    min-width:300px;
+    max-width: 1158px;
+    position: relative;
+}
+
