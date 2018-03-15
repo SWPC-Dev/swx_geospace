@@ -37,7 +37,9 @@
                 plotBorderColor: '#ffffff',
                 plotBorderWidth: 1, 
                 events: {
-                    load: function() {
+                    //this is an inefficent reload of data every minute
+                    //this will not work on jsfiddle and will kill your browser
+                    /*load: function() {
                         //console.log(this.series);
                         var bzPoints = this.series[0];
                         var btPoints = this.series[1];
@@ -133,7 +135,7 @@
                             console.log("full update");
                             loadJSON(true);
                         }, hourMillisecs);
-                    },
+                    },*/
                     redraw: function(){
                         var time_range;
                         if(this.rangeSelector.selected  == 0){
