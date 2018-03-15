@@ -1,41 +1,21 @@
 (function ($) {
+
     var geospaceChart;
     var validTime;
     var dataServiceUrl;
-    var refreshTime = 60001; // 60 secs + 1
+    var refreshTime = 60000; 
     var hourMillisecs = 3600000;
-    // This is used twice to initialize the vertical now line (startup, and refresh)
-    var nowLineOptions = {
-        id: 'now_line',
-        value:  new Date(),
-        width: 1,
-        color: '#2aadf9',
-        label: {
-            text: 'Latest value',
-            align: 'right',
-            color: '#ffffff',
-            y: 12,
-            x: 0
-        }
-    };
 
-    // If we don't wrap in this function, the dataservice url isn't available yet
-    $(document).ready(function() {
-        dataServiceUrl = $('#dataservice_url').text();
-    
-       // setInterval(reloadWorker, refreshTime);
-    
-        // Load the JSON from the data service and build the charts
-        loadJSON(false);
-    
-       // function reloadWorker() {
-        // Refresh the charts with potentially new JSON
-           // loadJSON(true);
-      //  }
-    }); // document ready ends
-    
-    // Build the charts from scratch and populate with data
+    loadJSON(false);
+
     function buildCharts(data) {
+
+        var time = new Date();
+        var currentTime = "Current Time: " + time.getUTCFullYear() + "-" + ('0'+String(time.getUTCMonth() +1)).slice(-2) + "-" + ('0'+String(time.getUTCDate())).slice(-2) + " " + ('0'+String(time.getUTCHours())).slice(-2) + ":" + ('0'+String(time.getUTCMinutes())).slice(-2) + " UTC" + "<br/>";
+        var validTimeDate = new Date(validTime);
+        var minuteDifference = Math.floor(((validTimeDate.getTime() - time.getTime())/1000)/60);
+        var customSubtitle = currentTime + "Valid Time: " + validTimeDate.getUTCFullYear() + "-" + String(validTimeDate.getUTCMonth()+1).padStart(2, '0') + "-" + String(validTimeDate.getUTCDate()).padStart(2, '0') + " " + String(validTimeDate.getUTCHours()).padStart(2, '0') + ":" + String(validTimeDate.getUTCMinutes()).padStart(2, '0') + " UTC" + " (" + minuteDifference + " mins ahead)";
+
         var bz = data[0];
         var bt = data[1];
         var density = data[2];
@@ -48,17 +28,17 @@
         var gkp = data[9];
         var kdst = data[10];
 
-        var customSubtitle = "Loading...";
-
-        geospaceChart = Highcharts.stockChart('geospace-container', {
+           geospaceChart = new Highcharts.StockChart({
             
             chart: {
+                renderTo: 'container',
                 backgroundColor: '#000000',
                 zoomType: 'xy',
                 plotBorderColor: '#ffffff',
                 plotBorderWidth: 1, 
                 events: {
                     load: function() {
+                        //console.log(this.series);
                         var bzPoints = this.series[0];
                         var btPoints = this.series[1];
                         var densePoints = this.series[2];
@@ -68,56 +48,66 @@
                         var alPoints = this.series[6];
                         var gdstPoints = this.series[9];
                         var gkpPoints = this.series[7];
-                       // var swpcPoints = this.series[8];
-                        //var kyotoPoints = this.series[10];
+                        var swpcPoints = this.series[8];
+                        var kyotoPoints = this.series[10];
                         setInterval(function(){
-                            $.getJSON(dataServiceUrl + '/products/geospace/propagated-solar-wind.json', function (dataRTSW) {
+                            $.getJSON('https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json', function (dataRTSW) {
+                                console.log('updating points');
                                 dataRTSW = sortRTSW(dataRTSW.splice(1));
                                 var latestPoint = dataRTSW[dataRTSW.length-1];
-                                var latestTime = Date.parse(parseDateTime(latestPoint[11]) + 'Z');
-                                
-                                var seriesLatestPoint = bzPoints.options.data[bzPoints.options.data.length -1];
+                                var latestTime = Date.parse(latestPoint[11] + 'Z');
+                                console.log(new Date());
+                                for(var i = 30; i >= 0; i--){
+                                    bzPoints.removePoint(bzPoints.data.length - 1);
+                                }
+                                console.log(new Date());
+                                var seriesLatestPoint = bzPoints.data[bzPoints.data.length -1];
+                                console.log("lets update this shit");
 
                                 if(latestTime != seriesLatestPoint[0])
                                 {
                                     var startingindex = dataRTSW.findIndex(findIndexOfPoint, [seriesLatestPoint, 11]);
                                     if(startingindex >= 0){
                                         for(var i = startingindex; i < dataRTSW.length; i++){
-    
-                                            latestPoint = dataRTSW[i];
-                                            latestTime = Date.parse(parseDateTime(latestPoint[11]) + 'Z');
-    
+
+                                            var latestPoint = dataRTSW[i];
+                                            var latestTime = Date.parse(latestPoint[11] + 'Z');
+
                                             bzPoints.addPoint([latestTime, parseInt(latestPoint[6])], false, false);
                                             btPoints.addPoint([latestTime, parseFloat(latestPoint[7])], false, false);
                                             densePoints.addPoint([latestTime, parseFloat(latestPoint[2])], false, false);
                                             speedPoints.addPoint([latestTime, parseFloat(latestPoint[1])], false, false);
                                             tempPoints.addPoint([latestTime, parseFloat(latestPoint[3])],false,false);
                                         }
-                                        geospaceChart.redraw();
+                                        geospaceChart.redraw(); 
+                                        console.log(new Date());
+                                        console.log("le chart has been redrawn");
                                     }
                                 }
 
                                 
                             });
-                            $.getJSON(dataServiceUrl +'/experimental/products/geospace/geomagnetic-indices.json', function(data){
+                            $.getJSON('https://services.swpc.noaa.gov/experimental/products/geospace/geomagnetic-indices.json', function(data){
                                 var latestPoint = data[data.length - 1];
                                 var latestTime = Date.parse(latestPoint[0] + 'Z');
 
                                 var seriesLatestPoint = gkpPoints.options.data[gkpPoints.options.data.length -1 ];
+
+                                var gkp
 
                                 if(latestTime !=  seriesLatestPoint[0]){
 
                                     var startingIndex = data.findIndex(findIndexOfPoint, [seriesLatestPoint,0]);
                                     if(startingIndex >= 0){
                                         for(var i = startingIndex; i < data.length; i ++){
-                                            latestPoint = data[i];
-                                            latestTime = Date.parse(latestPoint[0] + 'Z');
+                                            var latestPoint = data[i];
+                                            var latestTime = Date.parse(latestPoint[0] + 'Z');
                                             gdstPoints.addPoint([latestTime, parseInt(latestPoint[1])],false, false);
                                             gkpPoints.addPoint([latestTime, parseFloat(latestPoint[2])],false, false); 
                                             auPoints.addPoint([latestTime, parseInt(latestPoint[3])], false, false);
                                             alPoints.addPoint([latestTime, parseInt(latestPoint[4])], false,false);
                                         }
-    
+
                                         var time = new Date();
                                         var currentTime = "Current Time: " + time.getUTCFullYear() + "-" + ('0'+String(time.getUTCMonth() +1)).slice(-2) + "-" + 
                                             ('0'+String(time.getUTCDate())).slice(-2) + " " + ('0'+String(time.getUTCHours())).slice(-2) + ":" + ('0'+String(time.getUTCMinutes())).slice(-2) + " UTC" + "<br/>";
@@ -126,19 +116,21 @@
                                         var customSubtitle = currentTime + "Valid Time: " + validTimeDate.getUTCFullYear() + "-" + String(validTimeDate.getUTCMonth()+1).padStart(2, '0') +
                                             "-" + String(validTimeDate.getUTCDate()).padStart(2, '0') + " " + String(validTimeDate.getUTCHours()).padStart(2, '0') + ":" + 
                                             String(validTimeDate.getUTCMinutes()).padStart(2, '0') + " UTC" + " (" + minuteDifference + " mins ahead)";
-    
+
                                         geospaceChart.setTitle(null, {text: customSubtitle});
-    
+
                                         geospaceChart.xAxis[0].options.plotLines[0].value = new Date();
-    
-                                        geospaceChart.redraw();
+
+                                        geospaceChart.redraw(); 
                                     }
                                 }
 
                             });
                             
+                            
                         }, refreshTime);
                         setInterval(function(){
+                            console.log("full update");
                             loadJSON(true);
                         }, hourMillisecs);
                     },
@@ -153,7 +145,7 @@
                         }else if(this.rangeSelector.selected == 3){
                             time_range = "7 Days";
                         }
-                        this.setTitle({text: "Geospace Timeline: Lastest "+ time_range});
+                        this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 14px;'>Solar Wind Predicted at Earth</span>"});
                     }
                 }
             },
@@ -174,14 +166,18 @@
                         hover: {
                             enabled: false
                         }
-                    }
+                    },
+                    dataGrouping:{
+                        enabled: false
+                    },
+                    connectNulls: false
                 }
             },
 
             rangeSelector: {
                 selected: 1,
                 buttonPosition: {
-                    align:"left"
+                   align: 'left'
                 },
                 verticalAlign: 'bottom',
                 inputEnabled: false,
@@ -212,11 +208,14 @@
                 valueDecimals: 3,
                 animation: false,
                 useHTML: true,
+                //pointFormat: '{series.name}: <b>{point.y}</b>' + " " + '{series.valueSuffix}<br/>',
                 positioner: function (boxWidth, boxHeight, point) {
+
                     // Set up the variables
                     var chart = this.chart;
                     var plotLeft = chart.plotLeft;
                     var plotTop = chart.plotTop;
+                    var plotWidth = chart.plotWidth;
                     var plotHeight = chart.plotHeight;
                     var distance = 40;
                     var pointX = point.plotX;
@@ -231,6 +230,7 @@
                         $("#custom-tooltip").removeClass('tooltip-left');
 
                     }
+                    //console.log(plotTop);
                     y = Math.min(plotTop + plotHeight - boxHeight, Math.max(plotTop, pointY - boxHeight + plotTop + boxHeight / 2));
 
                     return { x: x, y: y };
@@ -239,13 +239,14 @@
 
 
             title: {
-                text: 'Geospace Timeline: Latest 24 Hours',
-                style: {"color": "#ffffff", "font-size": "16px", "font-weight": "bold" },
+                text: '<span>Geospace Timeline: Lastest 24 Hours</span>',
+                style: {"color": "#ffffff", "font-size": "16px", "font-weight": "bold", "margin-bottom": "25" },
                 align: 'left',
                 useHTML: true,
                 floating: true,
-                margin: 30,
-                x: 90
+                margin: 20,
+                x: 89,
+                y: 10,
             },
 
             subtitle: {
@@ -264,7 +265,9 @@
                 text: 'Space Weather Prediction Center',
                 href: 'http://www.swpc.noaa.gov',
                 position:{
+                    //align: 'right',
                     align: "center"
+                    //x: 2
                 },
                 style:{
                     fontSize: '11px',
@@ -273,17 +276,32 @@
             },
 
             xAxis: [
+                //0
                 {   
                     top: '100%',
                     height: '0%',
-                    plotLines: [nowLineOptions],
+                    plotLines: [{
+                        value:  new Date(), //currentTime,
+                        width: 1,
+                        color: '#2aadf9',
+                        label: {
+                            text: 'Latest value',
+                            align: 'right',
+                            color: '#ffffff',
+                            y: 12,
+                            x: 0
+                        }        
+                    }],
+                    startOnTick: true,
+                    endOnTick: true,
                     ordinal:false,
                     tickLength: 8,
                     tickWidth: 2,
-                    startOnTick: true,
-                    endOnTick: true,
-                    tickColor: '#ffffff'
+                    tickColor: '#ffffff',
+                    type: 'datetime',
+                    
                 },
+                //1
                 {
                     top: '10%',
                     height: '0%',
@@ -297,17 +315,18 @@
                     minorTickColor: '#ffffff',
                     minorTickLength: 3,
                     minorTickWidth: 1,
-                    minorTickPosition: 'inside',
                     startOnTick: true,
                     endOnTick: true,
+                    minorTickPosition: 'inside',
                     labels: {
                         enabled: false
                     }
                 },
+                //2
                 {
                     top: '20%',
                     height: '0%',
-                   offset: 0,
+                    offset: 0,
                     linkedTo: 0,
                     tickLength: 6,
                     tickWidth: 1,
@@ -317,13 +336,14 @@
                     minorTickColor: '#ffffff',
                     minorTickLength: 3,
                     minorTickWidth: 1,
-                    minorTickPosition: 'inside',
                     startOnTick: true,
                     endOnTick: true,
+                    minorTickPosition: 'inside',
                     labels: {
                         enabled: false
                     }     
                 },
+                //3
                 {
                     top: '30%',
                     height: '0%',
@@ -344,6 +364,7 @@
                         enabled: false
                     }
                 },
+                //4
                 {
                     top: '40%',
                     height: '0%',
@@ -364,6 +385,7 @@
                         enabled: false
                     }
                 },
+                //5
                 {
                     top: '50%',
                     height: '0%',
@@ -384,6 +406,7 @@
                         enabled: false
                     }
                 },
+                //6
                 {
                     top: '60%',
                     height: '0%',
@@ -397,13 +420,14 @@
                     minorTickColor: '#ffffff',
                     minorTickLength: 3,
                     minorTickWidth: 1,
-                    minorTickPosition: 'outside',
+                    minorTickPosition: 'inside',
                     startOnTick: true,
                     endOnTick: true,
                     labels: {
                         enabled: false
                     }
                 },
+                //7
                 {
                     top: '80%',
                     height: '0%',
@@ -424,6 +448,7 @@
                         enabled: false
                     }   
                 },
+                //8
                 {
                     top: '100%',
                     height: '0%',
@@ -461,8 +486,8 @@
                         style: {'color': '#ff0000'},
                         offset: 32
                     },
-                    top: '-2.7%', // Shift top plot up to eliminate gap in Drupal
-                    height: '12.7%',
+                    top: '0%',
+                    height: '10%',
                     lineWidth: 0,
                     tickAmount: 5,
                     tickInterval: 1,
@@ -470,7 +495,8 @@
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside',
-                    gridLineColor: '#4f4b47'
+                    gridLineColor: '#4f4b47',
+                    maxPadding: 0
                 }, 
                 //Y Axis 1
                 {
@@ -537,16 +563,14 @@
                         useHTML: true,
                         formatter: function() {
                             var intVal = parseInt(this.value);
-                            if(!isNaN(intVal)){
-                                power = intVal.toString().slice(1).length;
-                                if (power == 1) {
-                                    powerLabel = '*10';
-                                }
-                                else {
-                                    powerLabel = '*10<sup>' + power + '</sup>';
-                                }
-                                return this.value.toString()[0] + powerLabel;
+                            power = intVal.toString().slice(1).length;
+                            if (power == 1) {
+                                powerLabel = '*10';
                             }
+                            else {
+                                powerLabel = '*10<sup>' + power + '</sup>';
+                            }
+                            return intVal.toString()[0] + powerLabel;
                         }
                     },
                     title: {
@@ -558,6 +582,7 @@
                     offset: 0,
                     lineWidth: 0,
                     gridLineColor: '#4f4b47',
+                    lineColor: '#ffffff',
                     tickAmount: 5,
                     tickInterval: 0.1,
                     tickColor: '#ffffff',
@@ -584,7 +609,6 @@
                     offset: 0,
                     lineWidth: 0,
                     gridLineColor: '#4f4b47',
-                    lineColor: '#ffffff',
                     tickAmount: 5,
                     tickInterval: 15,
                     tickColor: '#ffffff',
@@ -603,14 +627,15 @@
                     },
                     title: {
                         text: 'Geospace Kp',
-                        style: {'color': '#21f26e'}
+                        style: {'color': '#21f26e'}//,
+                        //offset: 50
                     },
                     top: '60%',
                     height: '20%',
                     offset: 0,
                     lineWidth: 0,
-                    max: 9,
                     min: 0,
+                    max: 9,
                     gridLineColor: '#4f4b47',
                     lineColor: '#ffffff',
                     tickAmount: 11,
@@ -649,18 +674,17 @@
                     opposite: false,
                     title: {
                         useHTML: true,
-                        text: 'Btotal<br/><br/>       nT',
+                        text: 'Btotal<br/><br/> nT',
                         style: {'color': '#ffffff'},
                         offset: -60
                     },
-		            top: '-2%',
-                    height: '12%'
+                    height: '8%'
                 },
                 //Y Axis 8 (Adds title)
                 {
                     opposite: false,
                     title: {
-                        //useHTML: true,
+                        useHTML: true,
                         text: 'AL',
                         style: {'color': '#4286f4'},
                         offset: -20
@@ -673,7 +697,7 @@
                 {
                     opposite: false,
                     title:{
-                        //useHTML: true,
+                        useHTML: true,
                         text: "SWPC Kp",
                         style: {'color': '#4ac3c9'},
                         offset: -20
@@ -685,20 +709,19 @@
                 {
                     opposite: false,
                     title: {
-                        //useHTML: true,
+                        useHTML: true,
                         text: 'Kyoto DST',
                         style: {'color': '#e20000'},
-                        offset: -15
+                        offset: -25
                     },
                     top: '80%',
                     height: '20%'
                     
                 }
-            ],
+            ], 
 
             series: [
                 {
-                    // index 0
                     type: bz.type,
                     name: bz.name,
                     data: bz.data,                
@@ -715,7 +738,6 @@
 
                 },
                  {
-                    // index 1
                     type: bt.type,
                     name: bt.name,
                     data: bt.data,
@@ -729,7 +751,6 @@
                         radius: 1
                     }
                 }, {
-                    // index 2
                     type: density.type,
                     name: density.name,
                     data: density.data,
@@ -745,7 +766,6 @@
                         radius: 1
                     }
                 },{
-                    // index 3
                     type: speed.type,
                     name: speed.name,
                     data: speed.data,
@@ -760,7 +780,6 @@
                         radius: 1
                     }
                 },{
-                    // index 4
                     type: temp.type,
                     name: temp.name,
                     data: temp.data,
@@ -775,7 +794,6 @@
                         radius: 1
                     }
                 },{
-                    // index 5
                     type: au.type,
                     name: au.name,
                     data: au.data,
@@ -790,8 +808,7 @@
                         radius: 1
                     }
                 },{
-                    // index 6
-                    type: al.type,
+                   // type: al.type,
                     name: al.name,
                     data: al.data,
                     yAxis: 4,
@@ -805,7 +822,6 @@
                         radius: 1
                     }
                 },{
-                    // index 7
                     type: gkp.type,
                     name: gkp.name,
                     data: gkp.data,
@@ -836,7 +852,6 @@
                     }
                 },
                 {
-                    // index 8
                     type: swpcKp.type,
                     name: swpcKp.name,
                     data: swpcKp.data,
@@ -853,7 +868,6 @@
                     step: true
                     
                 },{
-                    // index 9
                     type: gdst.type,
                     name: gdst.name,
                     data: gdst.data,
@@ -868,7 +882,6 @@
                         radius: 1
                     }
                 },{
-                    // index 10
                     type: kdst.type,
                     name: kdst.name,
                     data: kdst.data,
@@ -882,19 +895,13 @@
                 } 
             ]
         }, function(chart){ //on complete function
-                chart.renderer.text('Solar Wind Predicted at Earth', 110, 53)
-                .css({
-                    color: '#ffffff',
-                    fontSize: '14px'
-                })
-                .add();
-                chart.renderer.text('Geospace Model Predicted Kp and DST (Ground Truth Data: SWPC Kp and Kyoto quick-look DST)', 110, 450)
+                chart.renderer.text('Geospace Model Predicted Kp and DST (Ground Truth Data: SWPC Kp and Kyoto quick-look DST)', 110, 445)
                 .attr({
                     //none?
                 })
                 .css({
                     color: '#ffffff',
-                    fontSize: '14px'
+                    fontSize: '16px'
                 })
                 .add();
                 chart.renderer.text("Verison 1.5", 1090, 845)
@@ -903,30 +910,34 @@
                     color: 'white'
                 })
                 .add();
-        });
-    } // Build charts
-  
+        });  
+    }
 
+
+  
     // Load the JSON and build or refresh the charts
     function loadJSON(refreshing) {
-        var series = [];
-        
-        var threedays = new Date();
-        threedays.setDate(threedays.getDate() - 3);
-        threedays = Date.parse(threedays);
+        console.log('hwllo');
 
-        $.getJSON(dataServiceUrl + '/products/geospace/propagated-solar-wind.json', function (data) {
-        var bzSeries = {name: "bz", data: [], type: "line"}; 
-        var btSeries = {name: "bt", data: [], type: "line"}; 
-        var tempSeries = {name: "Temperature", data: [], type: "line"};
-        var densitySeries = {name: "Density", data: [], type: "line"}; 
-        var speedSeries = {name: "Speed", data: [], type: "line"};  
+        var series = [];
+
+        //var threedays = new Date();
+        //threedays.setDate(threedays.getDate() - 3);
+        //threedays = Date.parse(threedays);
+    
+
+        $.getJSON('https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json', function (data) {
+        var bzSeries = {name: "bz", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1}; 
+        var btSeries = {name: "bt", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
+        var tempSeries = {name: "Temperature", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};
+        var densitySeries = {name: "Density", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
+        var speedSeries = {name: "Speed", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};  
 
         data = sortRTSW(data.splice(1));
         $.each(data,function (i, value){
             // Add X, Y values
-	        var time = Date.parse(parseDateTime(value[11]) + 'Z');
-            //if(time >= threedays){
+            var time = Date.parse(value[11] +'Z');
+           // if(time >= threedays){
                 bzSeries.data.push([time, parseFloat(value[6])]);
                 btSeries.data.push([time, parseFloat(value[7])]);
                 densitySeries.data.push([time, parseFloat(value[2])]);
@@ -943,8 +954,7 @@
             geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, speedSeries.name)].setData(speedSeries.data, true);
             geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, tempSeries.name)].setData(tempSeries.data, true);
         }
-        else {
-            
+        else { 
             series.push(bzSeries);
             series.push(btSeries);
             series.push(densitySeries);
@@ -952,89 +962,77 @@
             series.push(tempSeries);
         }
 
-        $.getJSON(dataServiceUrl + '/products/noaa-planetary-k-index.json', function(data){
-            var swpcKpSeries = {name: "SWPC KP", data: [], type: "line"}; 
+        $.getJSON('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json', function(data){
+            var swpcKpSeries = {name: "SWPC KP", data: [], type: "line", boostThreshold : 50}; 
             $.each(data,function (i, value){
-            // Add X, Y values
+                // Add X, Y values
                 if(i > 0){
-                    var time = Date.parse(parseDateTime(value[0]) + 'Z');
+                    var time = Date.parse(value[0] + 'Z');
                     //if(time >= threedays){
                         swpcKpSeries.data.push([time, parseFloat(value[1])]);
-                    //}
+                   // }
                 }
             });
-            
+
             if (refreshing) {
                 geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, swpcKpSeries.name)].setData(swpcKpSeries.data, true);
             }
             else {
                 series.push(swpcKpSeries);
             }
-	    //$.getJSON(dataServiceUrl + '/products/geospace/geomagnetic-indices.json', function(data){
-            $.getJSON(dataServiceUrl + '/experimental/products/geospace/geomagnetic-indices.json', function(data){
-                var gdstSeries = {name: "Geospace DST", data: [], type: "line"};
-                var gkpSeries = {name: "Geospace KP", data: [], type: "line"}; 
-                var auSeries = {name: "AU", data: [], type: "line"};
-                var alSeries = {name: "AL", data: [], type: "line"};
 
+            $.getJSON('https://services.swpc.noaa.gov/experimental/products/geospace/geomagnetic-indices.json', function(data){
+                var gdstSeries = {name: "Geospace DST", data: [], type: "line", boostThreshold : 50};
+                var gkpSeries = {name: "Geospace KP", data: [], type: "line", boostThreshold : 50}; 
+                var auSeries = {name: "AU", data: [], type: "line", boostThreshold : 50};
+                var alSeries = {name: "AL", data: [], type: "line", boostThreshold : 50};
+
+            $.each(data,function (i, value){
+                // Add X, Y values
+                if(i > 0){
+                    var time = Date.parse(value[0] + 'Z');
+                    //if(time >= threedays){
+                        gdstSeries.data.push([time, parseInt(value[1])]);
+                        gkpSeries.data.push([time, parseFloat(value[2])]); //we can keep precision for now
+                        auSeries.data.push([time, parseInt(value[3])]);
+                        alSeries.data.push([time, parseInt(value[4])]);
+                   // }
+                }
+            });
+
+            if (refreshing) {
+                geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, auSeries.name)].setData(auSeries.data, true);
+                geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, alSeries.name)].setData(alSeries.data, true);
+                geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, gdstSeries.name)].setData(gdstSeries.data, true);
+                geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, gkpSeries.name)].setData(gkpSeries.data, true);
+            }
+            else {
+                series.push(auSeries);
+                series.push(alSeries);
+                series.push(gdstSeries);
+                series.push(gkpSeries);
+            }
+            validTime = gdstSeries.data[gdstSeries.data.length-1][0];
+
+                $.getJSON('https://services.swpc.noaa.gov/experimental/products/kyoto-dst.json', function(data){
+                var kdstSeries = {name: "Kyoto DST", data: [], type: "line", boostThreshold : 50};
                 $.each(data,function (i, value){
                     // Add X, Y values
                     if(i > 0){
                         var time = Date.parse(value[0] + 'Z');
-                        //f(time >= threedays){
-                            gdstSeries.data.push([time, parseInt(value[1])]);
-                            gkpSeries.data.push([time, parseFloat(value[2])]); //we can keep precision for now
-                            auSeries.data.push([time, parseInt(value[3])]);
-                            alSeries.data.push([time, parseInt(value[4])]);
-                       // }
+                        //if(time >= threedays){
+                            kdstSeries.data.push([time, parseFloat(value[1])]);
+                        //}
                     }
                 });
-                if (refreshing) {
-                    geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, auSeries.name)].setData(auSeries.data, true);
-                    geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, alSeries.name)].setData(alSeries.data, true);
-                    geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, gdstSeries.name)].setData(gdstSeries.data, true);
-                    geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, gkpSeries.name)].setData(gkpSeries.data, true);
-                }
-                else {
-                    series.push(auSeries);
-                    series.push(alSeries);
-                    series.push(gdstSeries);
-                    series.push(gkpSeries);
-                }
-                validTime = gdstSeries.data[gdstSeries.data.length-1][0];
 
-                $.getJSON(dataServiceUrl + '/experimental/products/kyoto-dst.json', function(data){
-                    var kdstSeries = {name: "Kyoto DST", data: [], type: "line"};
-                    $.each(data,function (i, value){
-                        // Add X, Y values
-                        if(i > 0){
-                            var time = Date.parse(value[0] + 'Z');
-                           // if(time >= threedays){
-                                kdstSeries.data.push([time, parseFloat(value[1])]);
-                          //  }
-                        }
-                    });
-                    if (refreshing){
-                        geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, kdstSeries.name)].setData(kdstSeries.data, true);
-                        geospaceChart.xAxis[0].removePlotLine('now_line');
-                        nowLineOptions.value = new Date();
-                        geospaceChart.xAxis[0].addPlotLine(nowLineOptions);
-                    }
-                    else{
-                        series.push(kdstSeries);
-                        buildCharts(series);
-                    }
-
-                    var time = new Date();
-                    var currentTime = "Current Time: " + time.getUTCFullYear() + "-" + ('0'+String(time.getUTCMonth()+1)).slice(-2) + "-" +
-                    ('0'+String(time.getUTCDate())).slice(-2) + " " + ('0'+String(time.getUTCHours())).slice(-2) + ":" +
-                    ('0'+String(time.getUTCMinutes())).slice(-2) +  " UTC" + "<br/>";
-                    var validTimeDate = new Date(validTime);
-                    var minuteDifference = Math.floor(((validTimeDate.getTime() - time.getTime())/1000)/60);
-                    var customSubtitle = currentTime + "Valid Time: " + validTimeDate.getUTCFullYear() + "-" + ('0'+ String(validTimeDate.getUTCMonth()+1)).slice(-2) + "-" +
-                    ('0'+String(validTimeDate.getUTCDate())).slice(-2) + " " + ('0'+String(validTimeDate.getUTCHours())).slice(-2) + ":" +
-                    ('0'+String(validTimeDate.getUTCMinutes())).slice(-2) + " (" + minuteDifference + " mins ahead)";
-                    geospaceChart.setTitle(null, {text: customSubtitle}); // changing the member variable doesn't cause a refresh like this does
+                if (refreshing){
+                    geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, kdstSeries.name)].setData(kdstSeries.data, true);
+                }
+                else{
+                    series.push(kdstSeries);
+                    buildCharts(series);
+                }
                 }); // getJSON
             }); // getJSON
         }); // getJSON
@@ -1046,7 +1044,7 @@
     function findSeriesPlotIndex(series, name) {
         for (var i = 0; i < series.length; i +=1) {
             if (series[i].name == name) {
-                return i;
+            return i;
             }
         }
         return -1;
@@ -1055,24 +1053,17 @@
     function sortRTSW(data){
         data.sort((function(index){
            return function(a, b){
-                return(a[index] === b[index] ? 0 : (parseDateTime(a[index]) < parseDateTime(b[index]) ? -1 : 1 )); 
+               return(a[index] === b[index] ? 0 : (new Date(a[index]) < new Date(b[index]) ? -1 : 1 )); 
            };
-        })(11)); //11th index is propagated solar wind
+       })(11)); //11th index is propgated solar wind
         return data;
     }//sortRTSW
     
-    //this finds the last point on the series plot array in the array we get back from the JSON,
-    //so we can add only the new points on to the series array
     function findIndexOfPoint(element){
-        return Date.parse(element[this[1]]+"Z") == this[0][0];
-    }
-    
-    //this is for solar wind as Edge doesn't like the
-    //extra .000 on the end of the datetime
-    function parseDateTime(time){
-        return time.split(".000")[0];
+        return Date.parse(element[this[1]]+"Z") == this[0].x;
     }
     
 
-   
+
+
 }(jQuery));
