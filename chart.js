@@ -889,8 +889,8 @@
     
 
         $.getJSON('https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json', function (data) {
-        var bzSeries = {name: "bz", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1}; 
-        var btSeries = {name: "bt", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
+        var bzSeries = {name: "Bz", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1}; 
+        var btSeries = {name: "Bt", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
         var tempSeries = {name: "Temperature", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};
         var densitySeries = {name: "Density", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
         var speedSeries = {name: "Speed", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};  
