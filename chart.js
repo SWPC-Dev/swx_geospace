@@ -152,6 +152,10 @@
                 }
             },
 
+			//navigator:{
+			//	enabled: false
+			//},
+			
             //Optional?
             responsive: {
                 rules: [{
@@ -206,7 +210,7 @@
             },
 
             tooltip: {
-                split: false,
+                split: true,
                 valueDecimals: 3,
                 animation: false,
                 useHTML: true,
@@ -389,28 +393,7 @@
                 },
                 //5
                 {
-                    top: '50%',
-                    height: '0%',
-                    offset: 0,
-                    linkedTo: 0,
-                    tickLength: 6,
-                    tickWidth: 1,
-                    tickPosition: 'inside',
-                    minorGridLineWidth: 0,
-                    minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
-                    minorTickLength: 3,
-                    minorTickWidth: 1,
-                    minorTickPosition: 'inside',
-                    startOnTick: true,
-                    endOnTick: true,
-                    labels: {
-                        enabled: false
-                    }
-                },
-                //6
-                {
-                    top: '60%',
+                    top: '55%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -422,7 +405,28 @@
                     minorTickColor: '#ffffff',
                     minorTickLength: 3,
                     minorTickWidth: 1,
-                    minorTickPosition: 'inside',
+                    minorTickPosition: 'outside',
+                    startOnTick: true,
+                    endOnTick: true,
+                    labels: {
+                        enabled: false
+                    }
+                },
+                //6
+                {
+                    top: '70%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 6,
+                    tickWidth: 1,
+                    tickPosition: 'outside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 3,
+                    minorTickWidth: 1,
+                    minorTickPosition: 'outside',
                     startOnTick: true,
                     endOnTick: true,
                     labels: {
@@ -431,7 +435,7 @@
                 },
                 //7
                 {
-                    top: '80%',
+                    top: '85%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -606,8 +610,8 @@
                         text: 'AU',
                         style: {'color': '#3ee89b'}
                     },
-                    top: '40%',
-                    height: '10%',
+                    top: '55%',
+                    height: '15%',
                     offset: 0,
                     lineWidth: 0,
                     gridLineColor: '#4f4b47',
@@ -632,8 +636,8 @@
                         style: {'color': '#21f26e'}//,
                         //offset: 50
                     },
-                    top: '60%',
-                    height: '20%',
+                    top: '70%',
+                    height: '15%',
                     offset: 0,
                     lineWidth: 0,
                     min: 0,
@@ -660,8 +664,8 @@
                         text: 'Geospace DST (nT) ',
                         style: {'color': '#ffffff'}
                     },
-                    top: '80%',
-                    height: '20%',
+                    top: '85%',
+                    height: '15%',
                     offset: 0,
                     lineWidth: 0,
                     gridLineColor: '#4f4b47',
@@ -897,7 +901,7 @@
                 } 
             ]
         }, function(chart){ //on complete function
-                chart.renderer.text('Geospace Model Predicted Kp and DST (Ground Truth Data: SWPC Kp and Kyoto quick-look DST)', 110, 445)
+                chart.renderer.text('Geospace Model Predicted Kp and DST (Ground Truth Data: SWPC Kp and Kyoto quick-look DST)', 110, 400)
                 .attr({
                     //none?
                 })
