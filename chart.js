@@ -152,9 +152,9 @@
                 }
             },
 
-			//navigator:{
-			//	enabled: false
-			//},
+			navigator:{
+				enabled: false
+			},
 			
             //Optional?
             responsive: {
@@ -309,7 +309,7 @@
                 },
                 //1
                 {
-                    top: '10%',
+                    top: '12%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -330,7 +330,7 @@
                 },
                 //2
                 {
-                    top: '20%',
+                    top: '24%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -351,7 +351,7 @@
                 },
                 //3
                 {
-                    top: '30%',
+                    top: '36%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -372,7 +372,7 @@
                 },
                 //4
                 {
-                    top: '40%',
+                    top: '48%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -482,18 +482,20 @@
                 {
                     opposite: false,
                     labels: {
-                        align: 'right',
+                        align: 'center',
                         x: -3,
                         y: 5,
                         style: {'color': '#ffffff'}
                     },
                     title: {
-                        text: 'Bz',
-                        style: {'color': '#ff0000'},
+                        useHTML: true,
+                        text: '<center><font color="#ff0000">Bz</font><br/><font color="#ffffff">Btotal<br/>(nT)</font></center>',
+                        style: {'color': '#ff0000'
+                                },
                         offset: 32
                     },
                     top: '0%',
-                    height: '10%',
+                    height: '12%',
                     lineWidth: 0,
                     tickAmount: 5,
                     tickInterval: 1,
@@ -508,7 +510,7 @@
                 {
                     opposite: false,
                     labels: {
-                        align: 'right',
+                        align: 'center',
                         x: -3,
                         y: 5,
                          style: {'color': '#ffffff'}
@@ -516,11 +518,11 @@
                     title: {
                         useHTML: true,
                         offset: 37,
-                        text: 'Density<br/>p/cm<sup>3</sup>',
+                        text: '<center>Density<br/>p/cm<sup>3</sup></center>',
                         style: {'color': '#ff7f00'}
                     },
-                    top: '10%',
-                    height: '10%',
+                    top: '12%',
+                    height: '12%',
                     offset: 0,
                     lineWidth: 0,
                     gridLineColor: '#4f4b47',
@@ -535,17 +537,17 @@
                 {
                     opposite: false,
                     labels: {
-                        align: 'right',
+                        align: 'center',
                         x: -3,
                         y: 5,
                         style: {'color': '#ffffff'}
                     },
                     title: {
-                        text: 'Speed<br/>km/s',
+                        text: '<center>Speed<br/>km/s</center>',
                         style: {'color': '#f2ff00'}
                     },
-                    top: '20%',
-                    height: '10%',
+                    top: '24%',
+                    height: '12%',
                     offset: 0,
                     lineWidth: 0,
                     gridLineColor: '#4f4b47',
@@ -571,20 +573,20 @@
                             var intVal = parseInt(this.value);
                             power = intVal.toString().slice(1).length;
                             if (power == 1) {
-                                powerLabel = '*10';
+                                powerLabel = '10';
                             }
                             else {
-                                powerLabel = '*10<sup>' + power + '</sup>';
+                                powerLabel = '10<sup>' + power + '</sup>';
                             }
-                            return intVal.toString()[0] + powerLabel;
+                            return powerLabel;
                         }
                     },
                     title: {
                         text: 'Temperature<br/>K',
                         style: {'color': '#00c147'}
                     },
-                    top: '30%',
-                    height: '10%',
+                    top: '36%',
+                    height: '12%',
                     offset: 0,
                     lineWidth: 0,
                     gridLineColor: '#4f4b47',
@@ -601,13 +603,14 @@
                 {
                     opposite: false,
                     labels: {
-                        align: 'right',
+                        align: 'center',
                         x: -3,
                         y: 5,
                         style: {'color': '#ffffff'}
                     },
                     title: {
-                        text: 'AU',
+						useHTML: true,
+                        text: '<font color="#4286f4">AU</font><br/><font color="#3ee89b">AL</font>',
                         style: {'color': '#3ee89b'}
                     },
                     top: '55%',
@@ -632,7 +635,8 @@
                         style: {'color': '#ffffff'}
                     },
                     title: {
-                        text: 'Geospace Kp',
+						useHTML: true,
+                        text: '<center><font color="#4ac3c9">SWPC Kp</font><br/><font color="#21f26e">Geospace Kp</font></center><br/>',
                         style: {'color': '#21f26e'}//,
                         //offset: 50
                     },
@@ -655,13 +659,14 @@
                 {
                     opposite: false,
                     labels: {
-                        align: 'right',
+                        align: 'center',
                         x: -3,
                         y: 5,
                         style: {'color': '#ffffff'}
                     },
                     title: {
-                        text: 'Geospace DST (nT) ',
+						useHTML: true,
+                        text: '<center><font color="#e20000">Kyoto Dst</font><br/><font color="#ffffff">Geospace Dst<br/>(nT)</font></center>',
                         style: {'color': '#ffffff'}
                     },
                     top: '85%',
@@ -675,55 +680,6 @@
                     tickLength: 5,
                     tickPosition: 'inside'
                 },
-                //Y Axis 7 (Adds title)  
-                {
-                    opposite: false,
-                    title: {
-                        useHTML: true,
-                        text: 'Btotal<br/><br/> nT',
-                        style: {'color': '#ffffff'},
-                        offset: -60
-                    },
-                    height: '8%'
-                },
-                //Y Axis 8 (Adds title)
-                {
-                    opposite: false,
-                    title: {
-                        useHTML: true,
-                        text: 'AL',
-                        style: {'color': '#4286f4'},
-                        offset: -20
-                    },
-                    top: '40%',
-                    height: '10%'
-                    
-                },
-                //Y Axis 5(Adds title) //numbering???
-                {
-                    opposite: false,
-                    title:{
-                        useHTML: true,
-                        text: "SWPC Kp",
-                        style: {'color': '#4ac3c9'},
-                        offset: -20
-                    },
-                    top: '65%',
-                    height: '10%'
-                },
-                //Y Axis 9 (Adds title)
-                {
-                    opposite: false,
-                    title: {
-                        useHTML: true,
-                        text: 'Kyoto DST',
-                        style: {'color': '#e20000'},
-                        offset: -25
-                    },
-                    top: '80%',
-                    height: '20%'
-                    
-                }
             ], 
 
             series: [
@@ -901,7 +857,7 @@
                 } 
             ]
         }, function(chart){ //on complete function
-                chart.renderer.text('Geospace Model Predicted Kp and DST (Ground Truth Data: SWPC Kp and Kyoto quick-look DST)', 110, 400)
+                chart.renderer.text('Geospace Model Predicted Kp and Dst (Ground Truth Data: SWPC Kp and Kyoto quick-look Dst)', 110, 440)
                 .attr({
                     //none?
                 })
