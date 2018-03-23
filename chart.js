@@ -424,6 +424,48 @@
                         enabled: false
                     }
                 },
+                //4 Top
+                {
+                    top: '78%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 0,
+                    tickWidth: 1,
+                    tickPosition: 'outside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 0,
+                    minorTickWidth: 1,
+                    startOnTick: true,
+                    endOnTick: true,
+                    minorTickPosition: 'outside',
+                    labels: {
+                        enabled: false
+                    }     
+                },
+                //4 Bottom
+                {
+                    top: '100%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 6,
+                    tickWidth: 1,
+                    tickPosition: 'inside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 3,
+                    minorTickWidth: 1,
+                    minorTickPosition: 'inside',
+                    startOnTick: true,
+                    endOnTick: true,
+                    labels: {
+                        enabled: false
+                    }
+                },
             ],
 
             yAxis: [
@@ -536,14 +578,14 @@
                         text: 'Temperature<br/>K',
                         style: {'color': '#00c147'}
                     },
-                    top: '76%',
-                    height: '24%',
+                    top: '78%',
+                    height: '22%',
                     offset: 0,
                     lineWidth: 1,
                     gridLineColor: '#111111',
                     lineColor: '#ffffff',
                     tickAmount: 5,
-                    tickInterval: 0.1,
+                    tickInterval: 1,
                     tickColor: '#ffffff',
                     tickWidth: 1,
                     tickLength: 5,
