@@ -176,7 +176,7 @@
                         }
                     },
                     dataGrouping:{
-                        enabled: false
+                        enabled: true
                     },
                     connectNulls: false
                 }
@@ -217,8 +217,7 @@
                 valueDecimals: 3,
                 animation: false,
                 useHTML: true,
-                //pointFormat: '{series.name}: <b>{point.y}</b>' + " " + '{series.valueSuffix}<br/>',
-             
+                hideDelay : 2000,
                 
                positioner: function (boxWidth, boxHeight, point) {
 
@@ -234,18 +233,6 @@
 
                     x=975
                     y=200
-
-                   /** if ((pointX - boxWidth - distance) < plotLeft) {
-                        x = pointX + 130;
-                        $("#custom-tooltip").removeClass('tooltip-right');
-                    }
-                    else {
-                        x = Math.max(plotLeft, pointX - boxWidth + 50); 
-                        $("#custom-tooltip").removeClass('tooltip-left');
-
-                    } **/
-                    //console.log(plotTop);
-                   // y = Math.min(plotTop + plotHeight - boxHeight, Math.max(plotTop, pointY - boxHeight + plotTop + boxHeight / 2));
 
                     return { x: x, y: y };
                 } 
@@ -812,7 +799,7 @@
                         }
                     },
                     dataGrouping:{
-                        enabled: false
+                        enabled: true
                     },
                     connectNulls: false
                 }
@@ -853,7 +840,7 @@
                 valueDecimals: 3,
                 animation: false,
                 useHTML: true,
-                
+                hideDelay : 2000,
                positioner: function (boxWidth, boxHeight, point) {
 
                     // Set up the variables
@@ -885,12 +872,6 @@
                 y: 20,
             },
 
-           /** subtitle: {
-                text: customSubtitle,
-                align: 'right',
-                style: {"color": "#ffffff" },
-                useHTML: true
-            }, **/
 
             scrollbar: {
                 enabled: false
