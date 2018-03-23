@@ -317,6 +317,11 @@
 					tickPosition: 'inside',
                     tickColor: 'white',
                     type: 'datetime',
+					labels: {
+						style: {
+							color: 'white'
+						}
+					},
                     
                 },
 				//1 Top
@@ -643,7 +648,7 @@
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside',
-                    gridLineColor: '#4f4b47',
+                    gridLineColor: '#1A1818',
                     maxPadding: 0
                 }, 
 				
@@ -666,7 +671,7 @@
                     height: '11%',
                     offset: 0,
                     lineWidth: 1,
-                    gridLineColor: '#4f4b47',
+                    gridLineColor: '#1A1818',
                     tickAmount: 5,
                     tickInterval: 1,
                     tickColor: '#ffffff',
@@ -692,7 +697,7 @@
                     height: '11%',
                     offset: 0,
                     lineWidth: 1,
-                    gridLineColor: '#4f4b47',
+                    gridLineColor: '#111111',
                     lineColor: '#ffffff',
                     tickAmount: 5,
                     tickInterval: 10,
@@ -731,7 +736,7 @@
                     height: '11%',
                     offset: 0,
                     lineWidth: 1,
-                    gridLineColor: '#4f4b47',
+                    gridLineColor: '#111111',
                     lineColor: '#ffffff',
                     tickAmount: 5,
                     tickInterval: 0.1,
@@ -759,7 +764,7 @@
                     height: '14%',
                     offset: 0,
                     lineWidth: 1,
-                    gridLineColor: '#4f4b47',
+                    gridLineColor: '#111111',
                     tickAmount: 5,
                     tickInterval: 15,
                     tickColor: '#ffffff',
@@ -788,7 +793,7 @@
                     lineWidth: 1,
                     min: 0,
                     max: 9,
-                    gridLineColor: '#4f4b47',
+                    gridLineColor: '#111111',
                     lineColor: '#ffffff',
                     tickAmount: 11,
                     tickInterval: 1,
@@ -815,7 +820,7 @@
                     height: '14%',
                     offset: 0,
                     lineWidth: 1,
-                    gridLineColor: '#4f4b47',
+                    gridLineColor: '#111111',
                     tickAmount: 5,
                     tickColor: '#ffffff',
                     tickWidth: 1,
