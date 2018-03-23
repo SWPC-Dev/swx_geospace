@@ -36,6 +36,7 @@
                 zoomType: 'xy',
                 plotBorderColor: '#000000',
                 plotBorderWidth: 1, 
+                marginRight:200,
                 events: {
                     //this is an inefficent reload of data every minute
                     //this will not work on jsfiddle and will kill your browser
@@ -210,12 +211,15 @@
             },
 
             tooltip: {
-                split: true,
+                split: false,
+                shared: true,
                 valueDecimals: 3,
                 animation: false,
                 useHTML: true,
                 //pointFormat: '{series.name}: <b>{point.y}</b>' + " " + '{series.valueSuffix}<br/>',
-                positioner: function (boxWidth, boxHeight, point) {
+             
+                
+               positioner: function (boxWidth, boxHeight, point) {
 
                     // Set up the variables
                     var chart = this.chart;
@@ -227,7 +231,10 @@
                     var pointX = point.plotX;
                     var pointY = point.plotY;
 
-                    if ((pointX - boxWidth - distance) < plotLeft) {
+                    x=975
+                    y=350
+
+                   /** if ((pointX - boxWidth - distance) < plotLeft) {
                         x = pointX + 130;
                         $("#custom-tooltip").removeClass('tooltip-right');
                     }
@@ -235,13 +242,13 @@
                         x = Math.max(plotLeft, pointX - boxWidth + 50); 
                         $("#custom-tooltip").removeClass('tooltip-left');
 
-                    }
+                    } **/
                     //console.log(plotTop);
-                    y = Math.min(plotTop + plotHeight - boxHeight, Math.max(plotTop, pointY - boxHeight + plotTop + boxHeight / 2));
+                   // y = Math.min(plotTop + plotHeight - boxHeight, Math.max(plotTop, pointY - boxHeight + plotTop + boxHeight / 2));
 
                     return { x: x, y: y };
                 } 
-            },
+            }, 
 
 
             title: {
@@ -825,8 +832,8 @@
                     lineWidth: 0,
                     color: "#ff0000",
                     tooltip: {
-                        valueSuffix: " nT"
-                    },
+                        valueSuffix: " nT",
+                        },
                     animation: false,
                     marker: {
                         enabled: true,
