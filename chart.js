@@ -289,7 +289,7 @@
                     plotLines: [{
                         value:  new Date(), //currentTime,
                         width: 1,
-                        color: '#2aadf9',
+                        color: '#ffffff',
                         label: {
                             text: 'Latest value',
                             align: 'right',
@@ -303,6 +303,7 @@
                     ordinal:false,
                     tickLength: 8,
                     tickWidth: 2,
+					tickPosition: 'inside',
                     tickColor: '#ffffff',
                     type: 'datetime',
                     
@@ -476,19 +477,19 @@
                     }
                 },
 				
-                //5
+                //5 Top
                 {
-                    top: '55%',
+                    top: '53%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
-                    tickLength: 6,
+                    tickLength: 0,
                     tickWidth: 1,
                     tickPosition: 'outside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
                     minorTickColor: '#ffffff',
-                    minorTickLength: 3,
+                    minorTickLength: 0,
                     minorTickWidth: 1,
                     minorTickPosition: 'outside',
                     startOnTick: true,
@@ -497,19 +498,40 @@
                         enabled: false
                     }
                 },
-                //6
+				//5 Bottom
                 {
-                    top: '70%',
+                    top: '67%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
                     tickLength: 6,
                     tickWidth: 1,
-                    tickPosition: 'outside',
+                    tickPosition: 'inside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
                     minorTickColor: '#ffffff',
                     minorTickLength: 3,
+                    minorTickWidth: 1,
+                    minorTickPosition: 'inside',
+                    startOnTick: true,
+                    endOnTick: true,
+                    labels: {
+                        enabled: false
+                    }
+                },
+                //6 Top
+                {
+                    top: '69%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 0,
+                    tickWidth: 1,
+                    tickPosition: 'outside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 0,
                     minorTickWidth: 1,
                     minorTickPosition: 'outside',
                     startOnTick: true,
@@ -518,9 +540,9 @@
                         enabled: false
                     }
                 },
-                //7
+				//6 Bottom
                 {
-                    top: '85%',
+                    top: '83%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -539,7 +561,29 @@
                         enabled: false
                     }   
                 },
-                //8
+				
+                //7 Top
+                {
+                    top: '85%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 0,
+                    tickWidth: 1,
+                    tickPosition: 'inside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 0,
+                    minorTickWidth: 1,
+                    minorTickPosition: 'inside',
+                    startOnTick: true,
+                    endOnTick: true,
+                    labels: {
+                        enabled: false
+                    }   
+                },
+                //7 Bottom
                 {
                     top: '100%',
                     height: '0%',
@@ -591,6 +635,7 @@
                     gridLineColor: '#4f4b47',
                     maxPadding: 0
                 }, 
+				
                 //Y Axis 1
                 {
                     opposite: false,
@@ -699,8 +744,8 @@
                         text: '<font color="#4286f4">AU</font><br/><font color="#3ee89b">AL</font>',
                         style: {'color': '#3ee89b'}
                     },
-                    top: '55%',
-                    height: '15%',
+                    top: '53%',
+                    height: '14%',
                     offset: 0,
                     lineWidth: 1,
                     gridLineColor: '#4f4b47',
@@ -726,8 +771,8 @@
                         style: {'color': '#21f26e'}//,
                         //offset: 50
                     },
-                    top: '70%',
-                    height: '15%',
+                    top: '69%',
+                    height: '14%',
                     offset: 0,
                     lineWidth: 1,
                     min: 0,
@@ -756,7 +801,7 @@
                         style: {'color': '#ffffff'}
                     },
                     top: '85%',
-                    height: '15%',
+                    height: '14%',
                     offset: 0,
                     lineWidth: 1,
                     gridLineColor: '#4f4b47',
