@@ -310,6 +310,11 @@
 					tickPosition: 'inside',
                     tickColor: 'white',
                     type: 'datetime',
+					labels: {
+						style: {
+							color: 'white'
+						}
+					},
                     
                 },
 				//1 Top
