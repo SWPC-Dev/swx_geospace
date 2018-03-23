@@ -233,7 +233,7 @@
                     var pointY = point.plotY;
 
                     x=975
-                    y=350
+                    y=200
 
                    /** if ((pointX - boxWidth - distance) < plotLeft) {
                         x = pointX + 130;
@@ -348,7 +348,7 @@
                 },
                 //1 Bottom
                 {
-                    top: '11%',
+                    top: '24%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -369,7 +369,7 @@
                 },
 				//2 Top
                 {
-                    top: '12%',
+                    top: '26%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -390,7 +390,7 @@
                 },
                 //2 Bottom
                 {
-                    top: '23%',
+                    top: '50%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -411,7 +411,7 @@
                 },
 				//3 Top
                 {
-                    top: '24%',
+                    top: '52%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -432,7 +432,7 @@
                 },
                 //3 Bottom
                 {
-                    top: '35%',
+                    top: '76%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -451,176 +451,6 @@
                         enabled: false
                     }
                 },
-				//4 Top
-                {
-                    top: '36%',
-                    height: '0%',
-                    offset: 0,
-                    linkedTo: 0,
-                    tickLength: 0,
-                    tickWidth: 1,
-                    tickPosition: 'outside',
-                    minorGridLineWidth: 0,
-                    minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
-                    minorTickLength: 0,
-                    minorTickWidth: 1,
-                    minorTickPosition: 'outside',
-                    startOnTick: true,
-                    endOnTick: true,
-                    labels: {
-                        enabled: false
-                    }
-                },
-                //4 Bottom
-                {
-                    top: '47%',
-                    height: '0%',
-                    offset: 0,
-                    linkedTo: 0,
-                    tickLength: 6,
-                    tickWidth: 1,
-                    tickPosition: 'inside',
-                    minorGridLineWidth: 0,
-                    minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
-                    minorTickLength: 3,
-                    minorTickWidth: 1,
-                    minorTickPosition: 'inside',
-                    startOnTick: true,
-                    endOnTick: true,
-                    labels: {
-                        enabled: false
-                    }
-                },
-				
-                //5 Top
-                {
-                    top: '53%',
-                    height: '0%',
-                    offset: 0,
-                    linkedTo: 0,
-                    tickLength: 0,
-                    tickWidth: 1,
-                    tickPosition: 'outside',
-                    minorGridLineWidth: 0,
-                    minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
-                    minorTickLength: 0,
-                    minorTickWidth: 1,
-                    minorTickPosition: 'outside',
-                    startOnTick: true,
-                    endOnTick: true,
-                    labels: {
-                        enabled: false
-                    }
-                },
-				//5 Bottom
-                {
-                    top: '67%',
-                    height: '0%',
-                    offset: 0,
-                    linkedTo: 0,
-                    tickLength: 6,
-                    tickWidth: 1,
-                    tickPosition: 'inside',
-                    minorGridLineWidth: 0,
-                    minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
-                    minorTickLength: 3,
-                    minorTickWidth: 1,
-                    minorTickPosition: 'inside',
-                    startOnTick: true,
-                    endOnTick: true,
-                    labels: {
-                        enabled: false
-                    }
-                },
-                //6 Top
-                {
-                    top: '69%',
-                    height: '0%',
-                    offset: 0,
-                    linkedTo: 0,
-                    tickLength: 0,
-                    tickWidth: 1,
-                    tickPosition: 'outside',
-                    minorGridLineWidth: 0,
-                    minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
-                    minorTickLength: 0,
-                    minorTickWidth: 1,
-                    minorTickPosition: 'outside',
-                    startOnTick: true,
-                    endOnTick: true,
-                    labels: {
-                        enabled: false
-                    }
-                },
-				//6 Bottom
-                {
-                    top: '83%',
-                    height: '0%',
-                    offset: 0,
-                    linkedTo: 0,
-                    tickLength: 6,
-                    tickWidth: 1,
-                    tickPosition: 'inside',
-                    minorGridLineWidth: 0,
-                    minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
-                    minorTickLength: 3,
-                    minorTickWidth: 1,
-                    minorTickPosition: 'inside',
-                    startOnTick: true,
-                    endOnTick: true,
-                    labels: {
-                        enabled: false
-                    }   
-                },
-				
-                //7 Top
-                {
-                    top: '85%',
-                    height: '0%',
-                    offset: 0,
-                    linkedTo: 0,
-                    tickLength: 0,
-                    tickWidth: 1,
-                    tickPosition: 'inside',
-                    minorGridLineWidth: 0,
-                    minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
-                    minorTickLength: 0,
-                    minorTickWidth: 1,
-                    minorTickPosition: 'inside',
-                    startOnTick: true,
-                    endOnTick: true,
-                    labels: {
-                        enabled: false
-                    }   
-                },
-                //7 Bottom
-                {
-                    top: '100%',
-                    height: '0%',
-                    offset: 0,
-                    linkedTo: 0,
-                    tickLength: 6,
-                    tickWidth: 1,
-                    tickPosition: 'inside',
-                    minorGridLineWidth: 0,
-                    minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
-                    minorTickLength: 3,
-                    minorTickWidth: 1,
-                    minorTickPosition: 'inside',
-                    startOnTick: true,
-                    endOnTick: true,
-                    labels: {
-                        enabled: false
-                    }
-                }
             ],
 
             yAxis: [
@@ -641,7 +471,7 @@
                         offset: 32
                     },
                     top: '0%',
-                    height: '11%',
+                    height: '24%',
                     lineWidth: 1,
                     tickAmount: 5,
                     tickInterval: 1,
@@ -668,8 +498,8 @@
                         text: '<center>Density<br/>p/cm<sup>3</sup></center>',
                         style: {'color': '#ff7f00'}
                     },
-                    top: '12%',
-                    height: '11%',
+                    top: '26%',
+                    height: '24%',
                     offset: 0,
                     lineWidth: 1,
                     gridLineColor: '#1A1818',
@@ -694,8 +524,8 @@
                         text: '<center>Speed<br/>km/s</center>',
                         style: {'color': '#f2ff00'}
                     },
-                    top: '24%',
-                    height: '11%',
+                    top: '52%',
+                    height: '24%',
                     offset: 0,
                     lineWidth: 1,
                     gridLineColor: '#111111',
@@ -733,8 +563,8 @@
                         text: 'Temperature<br/>K',
                         style: {'color': '#00c147'}
                     },
-                    top: '36%',
-                    height: '11%',
+                    top: '76%',
+                    height: '24%',
                     offset: 0,
                     lineWidth: 1,
                     gridLineColor: '#111111',
@@ -747,87 +577,7 @@
                     tickPosition: 'inside'
 
                 },
-                //Y Axis 4
-                {
-                    opposite: false,
-                    labels: {
-                        align: 'center',
-                        x: -3,
-                        y: 5,
-                        style: {'color': '#ffffff'}
-                    },
-                    title: {
-						useHTML: true,
-                        text: '<font color="#4286f4">AU</font><br/><font color="#3ee89b">AL</font>',
-                        style: {'color': '#3ee89b'}
-                    },
-                    top: '53%',
-                    height: '14%',
-                    offset: 0,
-                    lineWidth: 1,
-                    gridLineColor: '#111111',
-                    tickAmount: 5,
-                    tickInterval: 15,
-                    tickColor: '#ffffff',
-                    tickWidth: 1,
-                    tickLength: 5,
-                    tickPosition: 'inside'
-                },
-                //Y Axis 5
-                {
-                    opposite: false,
-                    labels: {
-                        align: 'right',
-                        x: -3,
-                        y: 5,
-                        style: {'color': '#ffffff'}
-                    },
-                    title: {
-						useHTML: true,
-                        text: '<center><font color="#4ac3c9">SWPC Kp</font><br/><font color="#21f26e">Geospace Kp</font></center><br/>',
-                        style: {'color': '#21f26e'}//,
-                        //offset: 50
-                    },
-                    top: '69%',
-                    height: '14%',
-                    offset: 0,
-                    lineWidth: 1,
-                    min: 0,
-                    max: 9,
-                    gridLineColor: '#111111',
-                    lineColor: '#ffffff',
-                    tickAmount: 11,
-                    tickInterval: 1,
-                    tickColor: '#ffffff',
-                    tickWidth: 1,
-                    tickLength: 5,
-                    tickPosition: 'inside'
-                }, 
-                //Y Axis 6
-                {
-                    opposite: false,
-                    labels: {
-                        align: 'center',
-                        x: -3,
-                        y: 5,
-                        style: {'color': '#ffffff'}
-                    },
-                    title: {
-						useHTML: true,
-                        text: '<center><font color="#e20000">Kyoto Dst</font><br/><font color="#ffffff">Geospace Dst<br/>(nT)</font></center>',
-                        style: {'color': '#ffffff'}
-                    },
-                    top: '85%',
-                    height: '14%',
-                    offset: 0,
-                    lineWidth: 1,
-                    gridLineColor: '#111111',
-                    tickAmount: 5,
-                    tickColor: '#ffffff',
-                    tickWidth: 1,
-                    tickLength: 5,
-                    tickPosition: 'inside'
-                },
+             
             ], 
 
             series: [
@@ -903,117 +653,9 @@
                         enabled: true,
                         radius: 1
                     }
-                },{
-                    type: au.type,
-                    name: au.name,
-                    data: au.data,
-                    yAxis: 4,
-                    lineWidth: 0,
-                    color: "#3ee89b",
-                    tooltip: {
-                        valueSuffix: " nT"
-                    },
-                    marker: {
-                        enabled: true,
-                        radius: 1
-                    }
-                },{
-                   // type: al.type,
-                    name: al.name,
-                    data: al.data,
-                    yAxis: 4,
-                    lineWidth: 0,
-                    color: "#4286f4",
-                    tooltip: {
-                        valueSuffix: " nT"
-                    },
-                    marker: {
-                        enabled: true,
-                        radius: 1
-                    }
-                },{
-                    type: gkp.type,
-                    name: gkp.name,
-                    data: gkp.data,
-                    yAxis: 5,
-                    lineWidth: 0,
-                    zones: [{
-                        value: 4,
-                        color: '#21f26e'
-                    },{
-                        value: 5,
-                        color: '#e8e53e'
-                    },{
-                        value: 6,
-                        color: '#ffbb0f'
-                    },{
-                        value: 7.5,
-                        color: '#ff530f'
-                    },{
-                        value: 8.5,
-                        color: '#ff0000'
-                    }],
-                    tooltip: {
-                        valueSuffix: ""
-                    },
-                    marker: {
-                        enabled: true,
-                        radius: 1
-                    }
-                },
-                {
-                    type: swpcKp.type,
-                    name: swpcKp.name,
-                    data: swpcKp.data,
-                    yAxis: 5,
-                    lineWidth: 1,
-                    color: "#4ac3c9",
-                    tooltip: {
-                        valueSuffix: "W"
-                    },
-                    marker: {
-                        enabled: true,
-                        radius: 1
-                    },
-                    step: true
-                    
-                },{
-                    type: gdst.type,
-                    name: gdst.name,
-                    data: gdst.data,
-                    yAxis: 6,
-                    lineWidth: 0,
-                    color: "#ffffff",
-                    tooltip: {
-                        valueSuffix: " nT"
-                    },
-                    marker: {
-                        enabled: true,
-                        radius: 1
-                    }
-                },{
-                    type: kdst.type,
-                    name: kdst.name,
-                    data: kdst.data,
-                    yAxis: 6,
-                    lineWidth: 1,
-                    color: "#e20000",
-                    tooltip: {
-                        valueSuffix: " nT"
-                    },
-                    step: true
-                } 
+                }
             ]
         }, function(chart){ //on complete function
-                chart.renderer.text('Geospace Model Predicted Kp and Dst (Ground Truth Data: SWPC Kp and Kyoto quick-look Dst)', 100, 435)
-                .attr({
-                    //none?
-                })
-                .css({
-                    color: '#ffffff',
-                    fontSize: '14px'
-                })
-                .add();
                 chart.renderer.text("Verison 1.5", 1090, 845)
                 .css({
                     fontSize: '11px',
@@ -1143,7 +785,7 @@
                         }else if(this.rangeSelector.selected == 3){
                             time_range = "7 Days";
                         }
-                        this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
+                       // this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
                     }
                 }
             },
@@ -1233,22 +875,22 @@
 
 
             title: {
-                text: '<span>Geospace Timeline: Lastest 24 Hours</span>',
+                text: '<span> Geospace Model Predicted Kp and Dst (Ground Truth Data: SWPC Kp and Kyoto quick-look Dst) </span>',
                 style: {"color": "#ffffff", "font-size": "16px", "margin-bottom": "25"},
                 align: 'left',
                 useHTML: true,
-                floating: true,
+                floating: false,
                 margin: 20,
                 x: 89,
                 y: 20,
             },
 
-            subtitle: {
+           /** subtitle: {
                 text: customSubtitle,
                 align: 'right',
                 style: {"color": "#ffffff" },
                 useHTML: true
-            },
+            }, **/
 
             scrollbar: {
                 enabled: false
@@ -1624,21 +1266,6 @@
                 } 
             ]
         }, function(chart){ //on complete function
-                chart.renderer.text('Geospace Model Predicted Kp and Dst (Ground Truth Data: SWPC Kp and Kyoto quick-look Dst)', 100, 435)
-                .attr({
-                    //none?
-                })
-                .css({
-                    color: '#ffffff',
-                    fontSize: '14px'
-                })
-                .add();
-                chart.renderer.text("Verison 1.5", 1090, 845)
-                .css({
-                    fontSize: '11px',
-                    color: 'white'
-                })
-                .add();
         });  
     }
 
