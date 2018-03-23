@@ -1215,6 +1215,7 @@
                     tooltip: {
                         valueSuffix: " nT"
                     },
+                    step: true
                 } 
             ]
         }, function(chart){ //on complete function
@@ -1276,9 +1277,11 @@
                 // Add X, Y values
                 if(i > 0){
                     var time = Date.parse(value[0] + 'Z');
-                    //if(time >= threedays){
-                        swpcKpSeries.data.push([time, parseFloat(value[1])]);
-                   // }
+                    var t = 0;
+                      for (j = 0; j < 180; j++) {
+                            t = time + j*60000;
+                            swpcKpSeries.data.push([t, parseFloat(value[1])]);
+                      }
                 }
             });
 
