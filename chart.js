@@ -28,7 +28,8 @@
         var gkp = data[9];
         var kdst = data[10];
 
-           geospaceChart = new Highcharts.StockChart({
+
+       dataChart = new Highcharts.StockChart({
             
             chart: {
                 renderTo: 'container',
@@ -995,6 +996,625 @@
                     name: kdst.name,
                     data: kdst.data,
                     yAxis: 6,
+                    lineWidth: 1,
+                    color: "#e20000",
+                    tooltip: {
+                        valueSuffix: " nT"
+                    },
+                    step: true
+                } 
+            ]
+        }, function(chart){ //on complete function
+                chart.renderer.text('Geospace Model Predicted Kp and Dst (Ground Truth Data: SWPC Kp and Kyoto quick-look Dst)', 100, 435)
+                .attr({
+                    //none?
+                })
+                .css({
+                    color: '#ffffff',
+                    fontSize: '14px'
+                })
+                .add();
+                chart.renderer.text("Verison 1.5", 1090, 845)
+                .css({
+                    fontSize: '11px',
+                    color: 'white'
+                })
+                .add();
+        });  
+
+// ****************** Geospace Model Plots *********************
+           geospaceChart = new Highcharts.StockChart({
+            
+            chart: {
+                renderTo: 'model-container',
+                backgroundColor: '#000000',
+                zoomType: 'xy',
+                plotBorderColor: '#000000',
+                plotBorderWidth: 1, 
+                marginRight:200,
+                events: {
+                    //this is an inefficent reload of data every minute
+                    //this will not work on jsfiddle and will kill your browser
+                    /*load: function() {
+                        //console.log(this.series);
+                        var bzPoints = this.series[0];
+                        var btPoints = this.series[1];
+                        var densePoints = this.series[2];
+                        var tempPoints = this.series[4];
+                        var speedPoints =this.series[3];
+                        var auPoints = this.series[5];
+                        var alPoints = this.series[6];
+                        var gdstPoints = this.series[9];
+                        var gkpPoints = this.series[7];
+                        var swpcPoints = this.series[8];
+                        var kyotoPoints = this.series[10];
+                        setInterval(function(){
+                            $.getJSON('https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json', function (dataRTSW) {
+                                console.log('updating points');
+                                dataRTSW = sortRTSW(dataRTSW.splice(1));
+                                var latestPoint = dataRTSW[dataRTSW.length-1];
+                                var latestTime = Date.parse(latestPoint[11] + 'Z');
+                                console.log(new Date());
+                                for(var i = 30; i >= 0; i--){
+                                    bzPoints.removePoint(bzPoints.data.length - 1);
+                                }
+                                console.log(new Date());
+                                var seriesLatestPoint = bzPoints.data[bzPoints.data.length -1];
+                                console.log("lets update this shit");
+
+                                if(latestTime != seriesLatestPoint[0])
+                                {
+                                    var startingindex = dataRTSW.findIndex(findIndexOfPoint, [seriesLatestPoint, 11]);
+                                    if(startingindex >= 0){
+                                        for(var i = startingindex; i < dataRTSW.length; i++){
+
+                                            var latestPoint = dataRTSW[i];
+                                            var latestTime = Date.parse(latestPoint[11] + 'Z');
+
+                                            bzPoints.addPoint([latestTime, parseInt(latestPoint[6])], false, false);
+                                            btPoints.addPoint([latestTime, parseFloat(latestPoint[7])], false, false);
+                                            densePoints.addPoint([latestTime, parseFloat(latestPoint[2])], false, false);
+                                            speedPoints.addPoint([latestTime, parseFloat(latestPoint[1])], false, false);
+                                            tempPoints.addPoint([latestTime, parseFloat(latestPoint[3])],false,false);
+                                        }
+                                        geospaceChart.redraw(); 
+                                        console.log(new Date());
+                                        console.log("le chart has been redrawn");
+                                    }
+                                }
+
+                                
+                            });
+                            $.getJSON('https://services.swpc.noaa.gov/experimental/products/geospace/geomagnetic-indices.json', function(data){
+                                var latestPoint = data[data.length - 1];
+                                var latestTime = Date.parse(latestPoint[0] + 'Z');
+
+                                var seriesLatestPoint = gkpPoints.options.data[gkpPoints.options.data.length -1 ];
+
+                                var gkp
+
+                                if(latestTime !=  seriesLatestPoint[0]){
+
+                                    var startingIndex = data.findIndex(findIndexOfPoint, [seriesLatestPoint,0]);
+                                    if(startingIndex >= 0){
+                                        for(var i = startingIndex; i < data.length; i ++){
+                                            var latestPoint = data[i];
+                                            var latestTime = Date.parse(latestPoint[0] + 'Z');
+                                            gdstPoints.addPoint([latestTime, parseInt(latestPoint[1])],false, false);
+                                            gkpPoints.addPoint([latestTime, parseFloat(latestPoint[2])],false, false); 
+                                            auPoints.addPoint([latestTime, parseInt(latestPoint[3])], false, false);
+                                            alPoints.addPoint([latestTime, parseInt(latestPoint[4])], false,false);
+                                        }
+
+                                        var time = new Date();
+                                        var currentTime = "Current Time: " + time.getUTCFullYear() + "-" + ('0'+String(time.getUTCMonth() +1)).slice(-2) + "-" + 
+                                            ('0'+String(time.getUTCDate())).slice(-2) + " " + ('0'+String(time.getUTCHours())).slice(-2) + ":" + ('0'+String(time.getUTCMinutes())).slice(-2) + " UTC" + "<br/>";
+                                        var validTimeDate = new Date(latestTime);
+                                        var minuteDifference = Math.floor(((validTimeDate.getTime() - time.getTime())/1000)/60);
+                                        var customSubtitle = currentTime + "Valid Time: " + validTimeDate.getUTCFullYear() + "-" + String(validTimeDate.getUTCMonth()+1).padStart(2, '0') +
+                                            "-" + String(validTimeDate.getUTCDate()).padStart(2, '0') + " " + String(validTimeDate.getUTCHours()).padStart(2, '0') + ":" + 
+                                            String(validTimeDate.getUTCMinutes()).padStart(2, '0') + " UTC" + " (" + minuteDifference + " mins ahead)";
+
+                                        geospaceChart.setTitle(null, {text: customSubtitle});
+
+                                        geospaceChart.xAxis[0].options.plotLines[0].value = new Date();
+
+                                        geospaceChart.redraw(); 
+                                    }
+                                }
+
+                            });
+                            
+                            
+                        }, refreshTime);
+                        setInterval(function(){
+                            console.log("full update");
+                            loadJSON(true);
+                        }, hourMillisecs);
+                    },*/
+                    redraw: function(){
+                        var time_range;
+                        if(this.rangeSelector.selected  == 0){
+                            time_range = "3 Hours";
+                        }else if(this.rangeSelector.selected == 1){
+                            time_range = "24 Hours";
+                        }else if(this.rangeSelector.selected == 2){
+                            time_range = "3 Days";
+                        }else if(this.rangeSelector.selected == 3){
+                            time_range = "7 Days";
+                        }
+                        this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
+                    }
+                }
+            },
+
+			navigator:{
+				enabled: false
+			},
+			
+            //Optional?
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 1158
+                    }
+                }]
+            },
+
+            plotOptions: {
+                series: {
+                    animation: false,
+                    states: {
+                        hover: {
+                            enabled: false
+                        }
+                    },
+                    dataGrouping:{
+                        enabled: false
+                    },
+                    connectNulls: false
+                }
+            },
+
+            rangeSelector: {
+                selected: 1,
+                buttonPosition: {
+                   align: 'left'
+                },
+                verticalAlign: 'bottom',
+                inputEnabled: false,
+                labelStyle: {
+                    color: '#ffffff'
+                },
+                buttons: [{
+                    type: 'hour',
+                    count: 3,
+                    text: '3h'
+                }, {
+                    type: 'day',
+                    count: 1,
+                    text: '1d'
+                }, {
+                    type: 'day',
+                    count: 3,
+                    text: '3d'
+                }, {
+                    type: 'day',
+                    count: 7,
+                    text: '7d'
+                }]
+            },
+
+            tooltip: {
+                split: false,
+                shared: true,
+                valueDecimals: 3,
+                animation: false,
+                useHTML: true,
+                
+               positioner: function (boxWidth, boxHeight, point) {
+
+                    // Set up the variables
+                    var chart = this.chart;
+                    var plotLeft = chart.plotLeft;
+                    var plotTop = chart.plotTop;
+                    var plotWidth = chart.plotWidth;
+                    var plotHeight = chart.plotHeight;
+                    var distance = 40;
+                    var pointX = point.plotX;
+                    var pointY = point.plotY;
+
+                    x=975
+                    y=150
+
+                    return { x: x, y: y };
+                } 
+            }, 
+
+
+            title: {
+                text: '<span>Geospace Timeline: Lastest 24 Hours</span>',
+                style: {"color": "#ffffff", "font-size": "16px", "margin-bottom": "25"},
+                align: 'left',
+                useHTML: true,
+                floating: true,
+                margin: 20,
+                x: 89,
+                y: 20,
+            },
+
+            subtitle: {
+                text: customSubtitle,
+                align: 'right',
+                style: {"color": "#ffffff" },
+                useHTML: true
+            },
+
+            scrollbar: {
+                enabled: false
+            },
+			
+			style: {
+				fontFamily: 'courier'
+			},
+
+            credits:{
+                enabled: true,
+                text: 'Space Weather Prediction Center',
+                href: 'http://www.swpc.noaa.gov',
+                position:{
+                    //align: 'right',
+                    align: "center"
+                    //x: 2
+                },
+                style:{
+                    fontSize: '11px',
+                    color: 'white'
+                }
+            },
+
+            xAxis: [
+                //0 Current Time Line - vertical one
+                {   
+                    top: '100%',
+                    height: '0%',
+                    plotLines: [{
+                        value:  new Date(), //currentTime,
+                        width: 1,
+                        color: '#2aadf9',
+                        label: {
+                            text: 'Latest value',
+                            align: 'right',
+                            color: '#ffffff',
+                            y: 12,
+                            x: 0
+                        }        
+                    }],
+                    startOnTick: true,
+                    endOnTick: true,
+                    ordinal:false,
+                    tickLength: 8,
+                    tickWidth: 2,
+					tickPosition: 'inside',
+                    tickColor: 'white',
+                    type: 'datetime',
+					labels: {
+						style: {
+							color: 'white'
+						}
+					},
+                    
+                },
+				
+				
+                //5 Top
+                {
+                    top: '0%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 0,
+                    tickWidth: 1,
+                    tickPosition: 'outside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 0,
+                    minorTickWidth: 1,
+                    minorTickPosition: 'outside',
+                    startOnTick: true,
+                    endOnTick: true,
+                    labels: {
+                        enabled: false
+                    }
+                },
+				//5 Bottom
+                {
+                    top: '32%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 6,
+                    tickWidth: 1,
+                    tickPosition: 'inside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 3,
+                    minorTickWidth: 1,
+                    minorTickPosition: 'inside',
+                    startOnTick: true,
+                    endOnTick: true,
+                    labels: {
+                        enabled: false
+                    }
+                },
+                //6 Top
+                {
+                    top: '34%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 0,
+                    tickWidth: 1,
+                    tickPosition: 'outside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 0,
+                    minorTickWidth: 1,
+                    minorTickPosition: 'outside',
+                    startOnTick: true,
+                    endOnTick: true,
+                    labels: {
+                        enabled: false
+                    }
+                },
+				//6 Bottom
+                {
+                    top: '66%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 6,
+                    tickWidth: 1,
+                    tickPosition: 'inside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 3,
+                    minorTickWidth: 1,
+                    minorTickPosition: 'inside',
+                    startOnTick: true,
+                    endOnTick: true,
+                    labels: {
+                        enabled: false
+                    }   
+                },
+				
+                //7 Top
+                {
+                    top: '68%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 0,
+                    tickWidth: 1,
+                    tickPosition: 'inside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 0,
+                    minorTickWidth: 1,
+                    minorTickPosition: 'inside',
+                    startOnTick: true,
+                    endOnTick: true,
+                    labels: {
+                        enabled: false
+                    }   
+                },
+                //7 Bottom
+                {
+                    top: '100%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 6,
+                    tickWidth: 1,
+                    tickPosition: 'inside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 3,
+                    minorTickWidth: 1,
+                    minorTickPosition: 'inside',
+                    startOnTick: true,
+                    endOnTick: true,
+                    labels: {
+                        enabled: false
+                    }
+                }
+            ],
+
+            yAxis: [
+                
+                //Y Axis 4
+                {
+                    opposite: false,
+                    labels: {
+                        align: 'center',
+                        x: -3,
+                        y: 5,
+                        style: {'color': '#ffffff'}
+                    },
+                    title: {
+						useHTML: true,
+                        text: '<font color="#4286f4">AU</font><br/><font color="#3ee89b">AL</font>',
+                        style: {'color': '#3ee89b'}
+                    },
+                    top: '0%',
+                    height: '32%',
+                    offset: 0,
+                    lineWidth: 1,
+                    gridLineColor: '#111111',
+                    tickAmount: 5,
+                    tickInterval: 15,
+                    tickColor: '#ffffff',
+                    tickWidth: 1,
+                    tickLength: 5,
+                    tickPosition: 'inside'
+                },
+                //Y Axis 5
+                {
+                    opposite: false,
+                    labels: {
+                        align: 'right',
+                        x: -3,
+                        y: 5,
+                        style: {'color': '#ffffff'}
+                    },
+                    title: {
+						useHTML: true,
+                        text: '<center><font color="#4ac3c9">SWPC Kp</font><br/><font color="#21f26e">Geospace Kp</font></center><br/>',
+                        style: {'color': '#21f26e'}//,
+                        //offset: 50
+                    },
+                    top: '34%',
+                    height: '32%',
+                    offset: 0,
+                    lineWidth: 1,
+                    min: 0,
+                    max: 9,
+                    gridLineColor: '#111111',
+                    lineColor: '#ffffff',
+                    tickAmount: 11,
+                    tickInterval: 1,
+                    tickColor: '#ffffff',
+                    tickWidth: 1,
+                    tickLength: 5,
+                    tickPosition: 'inside'
+                }, 
+                //Y Axis 6
+                {
+                    opposite: false,
+                    labels: {
+                        align: 'center',
+                        x: -3,
+                        y: 5,
+                        style: {'color': '#ffffff'}
+                    },
+                    title: {
+						useHTML: true,
+                        text: '<center><font color="#e20000">Kyoto Dst</font><br/><font color="#ffffff">Geospace Dst<br/>(nT)</font></center>',
+                        style: {'color': '#ffffff'}
+                    },
+                    top: '68%',
+                    height: '32%',
+                    offset: 0,
+                    lineWidth: 1,
+                    gridLineColor: '#111111',
+                    tickAmount: 5,
+                    tickColor: '#ffffff',
+                    tickWidth: 1,
+                    tickLength: 5,
+                    tickPosition: 'inside'
+                },
+            ], 
+
+            series: [
+               {
+                    type: au.type,
+                    name: au.name,
+                    data: au.data,
+                    yAxis: 0,
+                    lineWidth: 0,
+                    color: "#3ee89b",
+                    tooltip: {
+                        valueSuffix: " nT"
+                    },
+                    marker: {
+                        enabled: true,
+                        radius: 1
+                    }
+                },{
+                   // type: al.type,
+                    name: al.name,
+                    data: al.data,
+                    yAxis: 0,
+                    lineWidth: 0,
+                    color: "#4286f4",
+                    tooltip: {
+                        valueSuffix: " nT"
+                    },
+                    marker: {
+                        enabled: true,
+                        radius: 1
+                    }
+                },{
+                    type: gkp.type,
+                    name: gkp.name,
+                    data: gkp.data,
+                    yAxis: 1,
+                    lineWidth: 0,
+                    zones: [{
+                        value: 4,
+                        color: '#21f26e'
+                    },{
+                        value: 5,
+                        color: '#e8e53e'
+                    },{
+                        value: 6,
+                        color: '#ffbb0f'
+                    },{
+                        value: 7.5,
+                        color: '#ff530f'
+                    },{
+                        value: 8.5,
+                        color: '#ff0000'
+                    }],
+                    tooltip: {
+                        valueSuffix: ""
+                    },
+                    marker: {
+                        enabled: true,
+                        radius: 1
+                    }
+                },
+                {
+                    type: swpcKp.type,
+                    name: swpcKp.name,
+                    data: swpcKp.data,
+                    yAxis: 1,
+                    lineWidth: 1,
+                    color: "#4ac3c9",
+                    tooltip: {
+                        valueSuffix: "W"
+                    },
+                    marker: {
+                        enabled: true,
+                        radius: 1
+                    },
+                    step: true
+                    
+                },{
+                    type: gdst.type,
+                    name: gdst.name,
+                    data: gdst.data,
+                    yAxis: 2,
+                    lineWidth: 0,
+                    color: "#ffffff",
+                    tooltip: {
+                        valueSuffix: " nT"
+                    },
+                    marker: {
+                        enabled: true,
+                        radius: 1
+                    }
+                },{
+                    type: kdst.type,
+                    name: kdst.name,
+                    data: kdst.data,
+                    yAxis: 2,
                     lineWidth: 1,
                     color: "#e20000",
                     tooltip: {
