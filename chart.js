@@ -246,7 +246,7 @@
 
             title: {
                 text: '<span>Geospace Timeline: Lastest 24 Hours</span>',
-                style: {"color": "#ffffff", "font-size": "16px", "margin-bottom": "25" },
+                style: {"color": "#ffffff", "font-size": "16px", "margin-bottom": "25"},
                 align: 'left',
                 useHTML: true,
                 floating: true,
@@ -265,6 +265,10 @@
             scrollbar: {
                 enabled: false
             },
+			
+			style: {
+				fontFamily: 'courier'
+			},
 
             credits:{
                 enabled: true,
@@ -282,14 +286,14 @@
             },
 
             xAxis: [
-                //0 Current Time Line
+                //0 Current Time Line - vertical one
                 {   
                     top: '100%',
                     height: '0%',
                     plotLines: [{
                         value:  new Date(), //currentTime,
                         width: 1,
-                        color: '#ffffff',
+                        color: '#2aadf9',
                         label: {
                             text: 'Latest value',
                             align: 'right',
@@ -304,7 +308,7 @@
                     tickLength: 8,
                     tickWidth: 2,
 					tickPosition: 'inside',
-                    tickColor: '#ffffff',
+                    tickColor: 'white',
                     type: 'datetime',
                     
                 },
