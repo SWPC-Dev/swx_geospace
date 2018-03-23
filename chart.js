@@ -252,7 +252,7 @@
                 floating: true,
                 margin: 20,
                 x: 89,
-                y: 10,
+                y: 20,
             },
 
             subtitle: {
@@ -992,13 +992,13 @@
                 } 
             ]
         }, function(chart){ //on complete function
-                chart.renderer.text('Geospace Model Predicted Kp and Dst (Ground Truth Data: SWPC Kp and Kyoto quick-look Dst)', 110, 440)
+                chart.renderer.text('Geospace Model Predicted Kp and Dst (Ground Truth Data: SWPC Kp and Kyoto quick-look Dst)', 100, 435)
                 .attr({
                     //none?
                 })
                 .css({
                     color: '#ffffff',
-                    fontSize: '16px'
+                    fontSize: '14px'
                 })
                 .add();
                 chart.renderer.text("Verison 1.5", 1090, 845)
