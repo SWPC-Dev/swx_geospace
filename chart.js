@@ -34,7 +34,7 @@
                 renderTo: 'container',
                 backgroundColor: '#000000',
                 zoomType: 'xy',
-                plotBorderColor: '#ffffff',
+                plotBorderColor: '#000000',
                 plotBorderWidth: 1, 
                 events: {
                     //this is an inefficent reload of data every minute
@@ -147,7 +147,7 @@
                         }else if(this.rangeSelector.selected == 3){
                             time_range = "7 Days";
                         }
-                        this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 14px;'>Solar Wind Predicted at Earth</span>"});
+                        this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
                     }
                 }
             },
@@ -246,7 +246,7 @@
 
             title: {
                 text: '<span>Geospace Timeline: Lastest 24 Hours</span>',
-                style: {"color": "#ffffff", "font-size": "16px", "font-weight": "bold", "margin-bottom": "25" },
+                style: {"color": "#ffffff", "font-size": "16px", "margin-bottom": "25" },
                 align: 'left',
                 useHTML: true,
                 floating: true,
@@ -282,7 +282,7 @@
             },
 
             xAxis: [
-                //0
+                //0 Current Time Line
                 {   
                     top: '100%',
                     height: '0%',
@@ -307,13 +307,34 @@
                     type: 'datetime',
                     
                 },
-                //1
+				//1 Top
                 {
-                    top: '12%',
+                    top: '0%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
-                    tickLength: 6,
+                    tickLength: 0,
+                    tickWidth: 1,
+                    tickPosition: 'outside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 0,
+                    minorTickWidth: 0,
+                    startOnTick: true,
+                    endOnTick: true,
+                    minorTickPosition: 'outside',
+                    labels: {
+                        enabled: false
+                    }
+                },
+                //1 Bottom
+                {
+                    top: '11%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 0,
                     tickWidth: 1,
                     tickPosition: 'inside',
                     minorGridLineWidth: 0,
@@ -328,9 +349,30 @@
                         enabled: false
                     }
                 },
-                //2
+				//2 Top
                 {
-                    top: '24%',
+                    top: '12%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 0,
+                    tickWidth: 1,
+                    tickPosition: 'outside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 0,
+                    minorTickWidth: 1,
+                    startOnTick: true,
+                    endOnTick: true,
+                    minorTickPosition: 'outside',
+                    labels: {
+                        enabled: false
+                    }
+                },
+                //2 Bottom
+                {
+                    top: '23%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -349,30 +391,72 @@
                         enabled: false
                     }     
                 },
-                //3
+				//3 Top
+                {
+                    top: '24%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 0,
+                    tickWidth: 1,
+                    tickPosition: 'outside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 0,
+                    minorTickWidth: 1,
+                    startOnTick: true,
+                    endOnTick: true,
+                    minorTickPosition: 'outside',
+                    labels: {
+                        enabled: false
+                    }     
+                },
+                //3 Bottom
+                {
+                    top: '35%',
+                    height: '0%',
+                    offset: 0,
+                    linkedTo: 0,
+                    tickLength: 6,
+                    tickWidth: 1,
+                    tickPosition: 'inside',
+                    minorGridLineWidth: 0,
+                    minorTickInterval: 'auto',
+                    minorTickColor: '#ffffff',
+                    minorTickLength: 3,
+                    minorTickWidth: 1,
+                    minorTickPosition: 'inside',
+                    startOnTick: true,
+                    endOnTick: true,
+                    labels: {
+                        enabled: false
+                    }
+                },
+				//4 Top
                 {
                     top: '36%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
-                    tickLength: 6,
+                    tickLength: 0,
                     tickWidth: 1,
-                    tickPosition: 'inside',
+                    tickPosition: 'outside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
                     minorTickColor: '#ffffff',
-                    minorTickLength: 3,
+                    minorTickLength: 0,
                     minorTickWidth: 1,
-                    minorTickPosition: 'inside',
+                    minorTickPosition: 'outside',
                     startOnTick: true,
                     endOnTick: true,
                     labels: {
                         enabled: false
                     }
                 },
-                //4
+                //4 Bottom
                 {
-                    top: '48%',
+                    top: '47%',
                     height: '0%',
                     offset: 0,
                     linkedTo: 0,
@@ -391,6 +475,7 @@
                         enabled: false
                     }
                 },
+				
                 //5
                 {
                     top: '55%',
@@ -495,8 +580,8 @@
                         offset: 32
                     },
                     top: '0%',
-                    height: '12%',
-                    lineWidth: 0,
+                    height: '11%',
+                    lineWidth: 1,
                     tickAmount: 5,
                     tickInterval: 1,
                     tickColor: '#ffffff',
@@ -522,9 +607,9 @@
                         style: {'color': '#ff7f00'}
                     },
                     top: '12%',
-                    height: '12%',
+                    height: '11%',
                     offset: 0,
-                    lineWidth: 0,
+                    lineWidth: 1,
                     gridLineColor: '#4f4b47',
                     tickAmount: 5,
                     tickInterval: 1,
@@ -533,7 +618,8 @@
                     tickLength: 5,
                     tickPosition: 'inside'            
                 }, 
-                //Y Axis 2
+                
+				//Y Axis 2
                 {
                     opposite: false,
                     labels: {
@@ -547,9 +633,9 @@
                         style: {'color': '#f2ff00'}
                     },
                     top: '24%',
-                    height: '12%',
+                    height: '11%',
                     offset: 0,
-                    lineWidth: 0,
+                    lineWidth: 1,
                     gridLineColor: '#4f4b47',
                     lineColor: '#ffffff',
                     tickAmount: 5,
@@ -586,9 +672,9 @@
                         style: {'color': '#00c147'}
                     },
                     top: '36%',
-                    height: '12%',
+                    height: '11%',
                     offset: 0,
-                    lineWidth: 0,
+                    lineWidth: 1,
                     gridLineColor: '#4f4b47',
                     lineColor: '#ffffff',
                     tickAmount: 5,
@@ -616,7 +702,7 @@
                     top: '55%',
                     height: '15%',
                     offset: 0,
-                    lineWidth: 0,
+                    lineWidth: 1,
                     gridLineColor: '#4f4b47',
                     tickAmount: 5,
                     tickInterval: 15,
@@ -643,7 +729,7 @@
                     top: '70%',
                     height: '15%',
                     offset: 0,
-                    lineWidth: 0,
+                    lineWidth: 1,
                     min: 0,
                     max: 9,
                     gridLineColor: '#4f4b47',
@@ -672,7 +758,7 @@
                     top: '85%',
                     height: '15%',
                     offset: 0,
-                    lineWidth: 0,
+                    lineWidth: 1,
                     gridLineColor: '#4f4b47',
                     tickAmount: 5,
                     tickColor: '#ffffff',
