@@ -252,7 +252,7 @@
 			},
 
             credits:{
-                enabled: true,
+                enabled: false,
                 text: 'Space Weather Prediction Center',
                 href: 'http://www.swpc.noaa.gov',
                 position:{
@@ -264,7 +264,7 @@
                     fontSize: '11px',
                     color: 'white'
                 }
-            },
+            }, 
 
             xAxis: [
                 //0 Current Time Line - vertical one
