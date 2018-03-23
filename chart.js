@@ -220,21 +220,7 @@
                 hideDelay : 2000,
                 
                positioner: function (boxWidth, boxHeight, point) {
-
-                    // Set up the variables
-                    var chart = this.chart;
-                    var plotLeft = chart.plotLeft;
-                    var plotTop = chart.plotTop;
-                    var plotWidth = chart.plotWidth;
-                    var plotHeight = chart.plotHeight;
-                    var distance = 40;
-                    var pointX = point.plotX;
-                    var pointY = point.plotY;
-
-                    x=975
-                    y=200
-
-                    return { x: x, y: y };
+                 return { x: this.chart.plotLeft + 1.02*this.chart.plotWidth, y: this.chart.plotTop + 0.4*this.chart.plotHeight };
                 } 
             }, 
 
@@ -841,22 +827,8 @@
                 animation: false,
                 useHTML: true,
                 hideDelay : 2000,
-               positioner: function (boxWidth, boxHeight, point) {
-
-                    // Set up the variables
-                    var chart = this.chart;
-                    var plotLeft = chart.plotLeft;
-                    var plotTop = chart.plotTop;
-                    var plotWidth = chart.plotWidth;
-                    var plotHeight = chart.plotHeight;
-                    var distance = 40;
-                    var pointX = point.plotX;
-                    var pointY = point.plotY;
-
-                    x=975
-                    y=150
-
-                    return { x: x, y: y };
+                positioner: function (boxWidth, boxHeight, point) {
+                    return { x: this.chart.plotLeft + 1.02*this.chart.plotWidth, y: this.chart.plotTop + 0.4*this.chart.plotHeight };
                 } 
             }, 
 
