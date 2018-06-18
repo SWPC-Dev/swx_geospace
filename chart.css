@@ -1,7 +1,7 @@
 
-#container {
+#data-container {
     
-    min-height: 450px;
+    min-height: 800px;
     min-width: 300px;
     max-width: 1158px;
     position: relative;
@@ -9,7 +9,7 @@
 
 #model-container {
     
-    min-height: 450px;
+    min-height: 800px;
     min-width: 200px;
     max-width: 1158px;
     position: relative;

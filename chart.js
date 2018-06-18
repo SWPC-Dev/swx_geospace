@@ -32,7 +32,7 @@
        dataChart = new Highcharts.StockChart({
             
             chart: {
-                renderTo: 'container',
+                renderTo: 'data-container',
                 backgroundColor: '#000000',
                 zoomType: 'xy',
                 plotBorderColor: '#000000',
