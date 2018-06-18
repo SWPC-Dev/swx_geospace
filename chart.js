@@ -183,15 +183,45 @@
             },
 
             rangeSelector: {
-                selected: 1,
+                buttonTheme: { // styles for the buttons
+            	    	fill: 'none',
+            	    	stroke: 'none',
+            	    	'stroke-width': 0,
+            		r: 8,
+            		style: {
+                		color: '#FFFFFF',
+                		fontWeight: 'bold'
+            		},
+            		states: {
+                		hover: {
+                		},
+                		select: {
+                    			fill: '#FFFFFF',
+                    			style: {
+                        			color: 'black'
+                    			}
+                		}
+				// disabled: { ... }
+                  	}
+               	},
+                inputBoxBorderColor: 'gray',
+                inputBoxWidth: 120,
+                inputBoxHeight: 18,
+                inputStyle: {
+                   	color: '#FFFFFF',
+                        fontWeight: 'bold'
+                },
+                labelStyle: {
+                	color: 'silver',
+                	fontWeight: 'bold'
+                },
+		selected: 1,
                 buttonPosition: {
                    align: 'left'
                 },
                 verticalAlign: 'bottom',
-                inputEnabled: false,
-                labelStyle: {
-                    color: '#ffffff'
-                },
+                inputEnabled: true,
+		inputDateFormat: '%Y-%m-%d',
                 buttons: [{
                     type: 'hour',
                     count: 3,
@@ -671,6 +701,11 @@
                 }
             ]
         }, function(chart){ //on complete function
+
+		// apply the date pickers
+		setTimeout(function() {
+			('input.highcharts-range-selector', $('#' + chart.options.chart.renderTo)).datepicker()
+		}, 0)
                 chart.renderer.text("Verison 1.5", 1090, 845)
                 .css({
                     fontSize: '11px',
@@ -1418,7 +1453,5 @@
         return Date.parse(element[this[1]]+"Z") == this[0].x;
     }
     
-
-
 
 }(jQuery));
