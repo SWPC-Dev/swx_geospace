@@ -88,26 +88,26 @@
             	    	fill: 'none',
             	    	stroke: 'gray',
             	    	'stroke-width': 1,
-            		r: 8,
+            		r: 8,   // how rounded the buttons are
             		style: {
                 		color: 'white',
                 		fontWeight: 'bold'
             		},
             		states: {
-                		hover: {
-                		},
-                		select: {
-                    			fill: '#FFFFFF',
-                    			style: {
-                        			color: 'black'
-                    			}
-                		}
-				// disabled: { ... }
+                	    hover: {
+				fill: 'silver',
+				style: {
+				    color: 'white'
+				}
+			    },
+                	    select: {
+                    		fill: 'pink',
+                	    }
                   	}
                	},
                 inputBoxBorderColor: 'gray',
                 inputBoxWidth: 120,
-                inputBoxHeight: 18,
+                inputBoxHeight: 16,
                 inputStyle: {
                    	color: '#FFFFFF',
                         fontWeight: 'bold'
@@ -118,8 +118,12 @@
                 },
 		selected: 2,
                 buttonPosition: {
-                   align: 'left'
+                    align: 'right',
+		    x:-130
                 },
+		inputPosition:{
+		    align: 'left'
+		},
                 verticalAlign: 'bottom',
                 inputEnabled: true,
 		inputDateFormat: '%Y-%m-%d',
