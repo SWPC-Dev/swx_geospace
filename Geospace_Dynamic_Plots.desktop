@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Geospace Dynamic Plots
+Type=Application
+Exec=firefox /media/joe/ExtraSpace/Software/swx_geospace/chart.html
+Terminal=false
+StartupNotify=false
