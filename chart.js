@@ -39,105 +39,6 @@
                 plotBorderWidth: 1, 
                 marginRight:200,
                 events: {
-                    //this is an inefficent reload of data every minute
-                    //this will not work on jsfiddle and will kill your browser
-                    /*load: function() {
-                        //console.log(this.series);
-                        var bzPoints = this.series[0];
-                        var btPoints = this.series[1];
-                        var densePoints = this.series[2];
-                        var tempPoints = this.series[4];
-                        var speedPoints =this.series[3];
-                        var auPoints = this.series[5];
-                        var alPoints = this.series[6];
-                        var gdstPoints = this.series[9];
-                        var gkpPoints = this.series[7];
-                        var swpcPoints = this.series[8];
-                        var kyotoPoints = this.series[10];
-                        setInterval(function(){
-                            $.getJSON('https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json', function (dataRTSW) {
-                                console.log('updating points');
-                                dataRTSW = sortRTSW(dataRTSW.splice(1));
-                                var latestPoint = dataRTSW[dataRTSW.length-1];
-                                var latestTime = Date.parse(latestPoint[11] + 'Z');
-                                console.log(new Date());
-                                for(var i = 30; i >= 0; i--){
-                                    bzPoints.removePoint(bzPoints.data.length - 1);
-                                }
-                                console.log(new Date());
-                                var seriesLatestPoint = bzPoints.data[bzPoints.data.length -1];
-                                console.log("lets update this shit");
-
-                                if(latestTime != seriesLatestPoint[0])
-                                {
-                                    var startingindex = dataRTSW.findIndex(findIndexOfPoint, [seriesLatestPoint, 11]);
-                                    if(startingindex >= 0){
-                                        for(var i = startingindex; i < dataRTSW.length; i++){
-
-                                            var latestPoint = dataRTSW[i];
-                                            var latestTime = Date.parse(latestPoint[11] + 'Z');
-
-                                            bzPoints.addPoint([latestTime, parseInt(latestPoint[6])], false, false);
-                                            btPoints.addPoint([latestTime, parseFloat(latestPoint[7])], false, false);
-                                            densePoints.addPoint([latestTime, parseFloat(latestPoint[2])], false, false);
-                                            speedPoints.addPoint([latestTime, parseFloat(latestPoint[1])], false, false);
-                                            tempPoints.addPoint([latestTime, parseFloat(latestPoint[3])],false,false);
-                                        }
-                                        geospaceChart.redraw(); 
-                                        console.log(new Date());
-                                        console.log("le chart has been redrawn");
-                                    }
-                                }
-
-                                
-                            });
-                            $.getJSON('https://services.swpc.noaa.gov/experimental/products/geospace/geomagnetic-indices.json', function(data){
-                                var latestPoint = data[data.length - 1];
-                                var latestTime = Date.parse(latestPoint[0] + 'Z');
-
-                                var seriesLatestPoint = gkpPoints.options.data[gkpPoints.options.data.length -1 ];
-
-                                var gkp
-
-                                if(latestTime !=  seriesLatestPoint[0]){
-
-                                    var startingIndex = data.findIndex(findIndexOfPoint, [seriesLatestPoint,0]);
-                                    if(startingIndex >= 0){
-                                        for(var i = startingIndex; i < data.length; i ++){
-                                            var latestPoint = data[i];
-                                            var latestTime = Date.parse(latestPoint[0] + 'Z');
-                                            gdstPoints.addPoint([latestTime, parseInt(latestPoint[1])],false, false);
-                                            gkpPoints.addPoint([latestTime, parseFloat(latestPoint[2])],false, false); 
-                                            auPoints.addPoint([latestTime, parseInt(latestPoint[3])], false, false);
-                                            alPoints.addPoint([latestTime, parseInt(latestPoint[4])], false,false);
-                                        }
-
-                                        var time = new Date();
-                                        var currentTime = "Current Time: " + time.getUTCFullYear() + "-" + ('0'+String(time.getUTCMonth() +1)).slice(-2) + "-" + 
-                                            ('0'+String(time.getUTCDate())).slice(-2) + " " + ('0'+String(time.getUTCHours())).slice(-2) + ":" + ('0'+String(time.getUTCMinutes())).slice(-2) + " UTC" + "<br/>";
-                                        var validTimeDate = new Date(latestTime);
-                                        var minuteDifference = Math.floor(((validTimeDate.getTime() - time.getTime())/1000)/60);
-                                        var customSubtitle = currentTime + "Valid Time: " + validTimeDate.getUTCFullYear() + "-" + String(validTimeDate.getUTCMonth()+1).padStart(2, '0') +
-                                            "-" + String(validTimeDate.getUTCDate()).padStart(2, '0') + " " + String(validTimeDate.getUTCHours()).padStart(2, '0') + ":" + 
-                                            String(validTimeDate.getUTCMinutes()).padStart(2, '0') + " UTC" + " (" + minuteDifference + " mins ahead)";
-
-                                        geospaceChart.setTitle(null, {text: customSubtitle});
-
-                                        geospaceChart.xAxis[0].options.plotLines[0].value = new Date();
-
-                                        geospaceChart.redraw(); 
-                                    }
-                                }
-
-                            });
-                            
-                            
-                        }, refreshTime);
-                        setInterval(function(){
-                            console.log("full update");
-                            loadJSON(true);
-                        }, hourMillisecs);
-                    },*/
                     redraw: function(){
                         var time_range;
                         if(this.rangeSelector.selected  == 0){
@@ -185,11 +86,11 @@
             rangeSelector: {
                 buttonTheme: { // styles for the buttons
             	    	fill: 'none',
-            	    	stroke: 'none',
-            	    	'stroke-width': 0,
+            	    	stroke: 'gray',
+            	    	'stroke-width': 1,
             		r: 8,
             		style: {
-                		color: '#FFFFFF',
+                		color: 'white',
                 		fontWeight: 'bold'
             		},
             		states: {
@@ -215,7 +116,7 @@
                 	color: 'silver',
                 	fontWeight: 'bold'
                 },
-		selected: 1,
+		selected: 2,
                 buttonPosition: {
                    align: 'left'
                 },
@@ -725,105 +626,6 @@
                 plotBorderWidth: 1, 
                 marginRight:200,
                 events: {
-                    //this is an inefficent reload of data every minute
-                    //this will not work on jsfiddle and will kill your browser
-                    /*load: function() {
-                        //console.log(this.series);
-                        var bzPoints = this.series[0];
-                        var btPoints = this.series[1];
-                        var densePoints = this.series[2];
-                        var tempPoints = this.series[4];
-                        var speedPoints =this.series[3];
-                        var auPoints = this.series[5];
-                        var alPoints = this.series[6];
-                        var gdstPoints = this.series[9];
-                        var gkpPoints = this.series[7];
-                        var swpcPoints = this.series[8];
-                        var kyotoPoints = this.series[10];
-                        setInterval(function(){
-                            $.getJSON('https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json', function (dataRTSW) {
-                                console.log('updating points');
-                                dataRTSW = sortRTSW(dataRTSW.splice(1));
-                                var latestPoint = dataRTSW[dataRTSW.length-1];
-                                var latestTime = Date.parse(latestPoint[11] + 'Z');
-                                console.log(new Date());
-                                for(var i = 30; i >= 0; i--){
-                                    bzPoints.removePoint(bzPoints.data.length - 1);
-                                }
-                                console.log(new Date());
-                                var seriesLatestPoint = bzPoints.data[bzPoints.data.length -1];
-                                console.log("lets update this shit");
-
-                                if(latestTime != seriesLatestPoint[0])
-                                {
-                                    var startingindex = dataRTSW.findIndex(findIndexOfPoint, [seriesLatestPoint, 11]);
-                                    if(startingindex >= 0){
-                                        for(var i = startingindex; i < dataRTSW.length; i++){
-
-                                            var latestPoint = dataRTSW[i];
-                                            var latestTime = Date.parse(latestPoint[11] + 'Z');
-
-                                            bzPoints.addPoint([latestTime, parseInt(latestPoint[6])], false, false);
-                                            btPoints.addPoint([latestTime, parseFloat(latestPoint[7])], false, false);
-                                            densePoints.addPoint([latestTime, parseFloat(latestPoint[2])], false, false);
-                                            speedPoints.addPoint([latestTime, parseFloat(latestPoint[1])], false, false);
-                                            tempPoints.addPoint([latestTime, parseFloat(latestPoint[3])],false,false);
-                                        }
-                                        geospaceChart.redraw(); 
-                                        console.log(new Date());
-                                        console.log("le chart has been redrawn");
-                                    }
-                                }
-
-                                
-                            });
-                            $.getJSON('https://services.swpc.noaa.gov/experimental/products/geospace/geomagnetic-indices.json', function(data){
-                                var latestPoint = data[data.length - 1];
-                                var latestTime = Date.parse(latestPoint[0] + 'Z');
-
-                                var seriesLatestPoint = gkpPoints.options.data[gkpPoints.options.data.length -1 ];
-
-                                var gkp
-
-                                if(latestTime !=  seriesLatestPoint[0]){
-
-                                    var startingIndex = data.findIndex(findIndexOfPoint, [seriesLatestPoint,0]);
-                                    if(startingIndex >= 0){
-                                        for(var i = startingIndex; i < data.length; i ++){
-                                            var latestPoint = data[i];
-                                            var latestTime = Date.parse(latestPoint[0] + 'Z');
-                                            gdstPoints.addPoint([latestTime, parseInt(latestPoint[1])],false, false);
-                                            gkpPoints.addPoint([latestTime, parseFloat(latestPoint[2])],false, false); 
-                                            auPoints.addPoint([latestTime, parseInt(latestPoint[3])], false, false);
-                                            alPoints.addPoint([latestTime, parseInt(latestPoint[4])], false,false);
-                                        }
-
-                                        var time = new Date();
-                                        var currentTime = "Current Time: " + time.getUTCFullYear() + "-" + ('0'+String(time.getUTCMonth() +1)).slice(-2) + "-" + 
-                                            ('0'+String(time.getUTCDate())).slice(-2) + " " + ('0'+String(time.getUTCHours())).slice(-2) + ":" + ('0'+String(time.getUTCMinutes())).slice(-2) + " UTC" + "<br/>";
-                                        var validTimeDate = new Date(latestTime);
-                                        var minuteDifference = Math.floor(((validTimeDate.getTime() - time.getTime())/1000)/60);
-                                        var customSubtitle = currentTime + "Valid Time: " + validTimeDate.getUTCFullYear() + "-" + String(validTimeDate.getUTCMonth()+1).padStart(2, '0') +
-                                            "-" + String(validTimeDate.getUTCDate()).padStart(2, '0') + " " + String(validTimeDate.getUTCHours()).padStart(2, '0') + ":" + 
-                                            String(validTimeDate.getUTCMinutes()).padStart(2, '0') + " UTC" + " (" + minuteDifference + " mins ahead)";
-
-                                        geospaceChart.setTitle(null, {text: customSubtitle});
-
-                                        geospaceChart.xAxis[0].options.plotLines[0].value = new Date();
-
-                                        geospaceChart.redraw(); 
-                                    }
-                                }
-
-                            });
-                            
-                            
-                        }, refreshTime);
-                        setInterval(function(){
-                            console.log("full update");
-                            loadJSON(true);
-                        }, hourMillisecs);
-                    },*/
                     redraw: function(){
                         var time_range;
                         if(this.rangeSelector.selected  == 0){
