@@ -29,216 +29,138 @@
         var kdst = data[10];
 
 
-       dataChart = new Highcharts.StockChart({
+        // color scheme setup
+
+        // background color
+        var bgcolor = '#000000'
+
+        // plot borders
+        var border_color = '#000000'
+        var border_width = 1
+
+        // line width
+        var line_width = 10
+
+        dataChart = new Highcharts.StockChart({
             
-            chart: {
-                renderTo: 'data-container',
-                backgroundColor: '#000000',
-                zoomType: 'xy',
-                plotBorderColor: '#000000',
-                plotBorderWidth: 1, 
-                marginRight:200,
-                events: {
-                    //this is an inefficent reload of data every minute
-                    //this will not work on jsfiddle and will kill your browser
-                    /*load: function() {
-                        //console.log(this.series);
-                        var bzPoints = this.series[0];
-                        var btPoints = this.series[1];
-                        var densePoints = this.series[2];
-                        var tempPoints = this.series[4];
-                        var speedPoints =this.series[3];
-                        var auPoints = this.series[5];
-                        var alPoints = this.series[6];
-                        var gdstPoints = this.series[9];
-                        var gkpPoints = this.series[7];
-                        var swpcPoints = this.series[8];
-                        var kyotoPoints = this.series[10];
-                        setInterval(function(){
-                            $.getJSON('https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json', function (dataRTSW) {
-                                console.log('updating points');
-                                dataRTSW = sortRTSW(dataRTSW.splice(1));
-                                var latestPoint = dataRTSW[dataRTSW.length-1];
-                                var latestTime = Date.parse(latestPoint[11] + 'Z');
-                                console.log(new Date());
-                                for(var i = 30; i >= 0; i--){
-                                    bzPoints.removePoint(bzPoints.data.length - 1);
-                                }
-                                console.log(new Date());
-                                var seriesLatestPoint = bzPoints.data[bzPoints.data.length -1];
-                                console.log("lets update this shit");
+          chart: {
+            renderTo: 'data-container',
+            backgroundColor: bgcolor,
+            zoomType: 'xy',
+            plotBorderColor: border_color,
+            plotBorderWidth: border_width, 
+            marginRight:200,
 
-                                if(latestTime != seriesLatestPoint[0])
-                                {
-                                    var startingindex = dataRTSW.findIndex(findIndexOfPoint, [seriesLatestPoint, 11]);
-                                    if(startingindex >= 0){
-                                        for(var i = startingindex; i < dataRTSW.length; i++){
-
-                                            var latestPoint = dataRTSW[i];
-                                            var latestTime = Date.parse(latestPoint[11] + 'Z');
-
-                                            bzPoints.addPoint([latestTime, parseInt(latestPoint[6])], false, false);
-                                            btPoints.addPoint([latestTime, parseFloat(latestPoint[7])], false, false);
-                                            densePoints.addPoint([latestTime, parseFloat(latestPoint[2])], false, false);
-                                            speedPoints.addPoint([latestTime, parseFloat(latestPoint[1])], false, false);
-                                            tempPoints.addPoint([latestTime, parseFloat(latestPoint[3])],false,false);
-                                        }
-                                        geospaceChart.redraw(); 
-                                        console.log(new Date());
-                                        console.log("le chart has been redrawn");
-                                    }
-                                }
-
-                                
-                            });
-                            $.getJSON('https://services.swpc.noaa.gov/experimental/products/geospace/geomagnetic-indices.json', function(data){
-                                var latestPoint = data[data.length - 1];
-                                var latestTime = Date.parse(latestPoint[0] + 'Z');
-
-                                var seriesLatestPoint = gkpPoints.options.data[gkpPoints.options.data.length -1 ];
-
-                                var gkp
-
-                                if(latestTime !=  seriesLatestPoint[0]){
-
-                                    var startingIndex = data.findIndex(findIndexOfPoint, [seriesLatestPoint,0]);
-                                    if(startingIndex >= 0){
-                                        for(var i = startingIndex; i < data.length; i ++){
-                                            var latestPoint = data[i];
-                                            var latestTime = Date.parse(latestPoint[0] + 'Z');
-                                            gdstPoints.addPoint([latestTime, parseInt(latestPoint[1])],false, false);
-                                            gkpPoints.addPoint([latestTime, parseFloat(latestPoint[2])],false, false); 
-                                            auPoints.addPoint([latestTime, parseInt(latestPoint[3])], false, false);
-                                            alPoints.addPoint([latestTime, parseInt(latestPoint[4])], false,false);
-                                        }
-
-                                        var time = new Date();
-                                        var currentTime = "Current Time: " + time.getUTCFullYear() + "-" + ('0'+String(time.getUTCMonth() +1)).slice(-2) + "-" + 
-                                            ('0'+String(time.getUTCDate())).slice(-2) + " " + ('0'+String(time.getUTCHours())).slice(-2) + ":" + ('0'+String(time.getUTCMinutes())).slice(-2) + " UTC" + "<br/>";
-                                        var validTimeDate = new Date(latestTime);
-                                        var minuteDifference = Math.floor(((validTimeDate.getTime() - time.getTime())/1000)/60);
-                                        var customSubtitle = currentTime + "Valid Time: " + validTimeDate.getUTCFullYear() + "-" + String(validTimeDate.getUTCMonth()+1).padStart(2, '0') +
-                                            "-" + String(validTimeDate.getUTCDate()).padStart(2, '0') + " " + String(validTimeDate.getUTCHours()).padStart(2, '0') + ":" + 
-                                            String(validTimeDate.getUTCMinutes()).padStart(2, '0') + " UTC" + " (" + minuteDifference + " mins ahead)";
-
-                                        geospaceChart.setTitle(null, {text: customSubtitle});
-
-                                        geospaceChart.xAxis[0].options.plotLines[0].value = new Date();
-
-                                        geospaceChart.redraw(); 
-                                    }
-                                }
-
-                            });
-                            
-                            
-                        }, refreshTime);
-                        setInterval(function(){
-                            console.log("full update");
-                            loadJSON(true);
-                        }, hourMillisecs);
-                    },*/
-                    redraw: function(){
-                        var time_range;
-                        if(this.rangeSelector.selected  == 0){
-                            time_range = "3 Hours";
-                        }else if(this.rangeSelector.selected == 1){
-                            time_range = "24 Hours";
-                        }else if(this.rangeSelector.selected == 2){
-                            time_range = "3 Days";
-                        }else if(this.rangeSelector.selected == 3){
-                            time_range = "7 Days";
-                        }
-                        this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
-                    }
+            events: {
+              redraw: function(){
+                var time_range;
+                if(this.rangeSelector.selected  == 0){
+                    time_range = "3 Hours";
+                }else if(this.rangeSelector.selected == 1){
+                    time_range = "24 Hours";
+                }else if(this.rangeSelector.selected == 2){
+                    time_range = "3 Days";
+                }else if(this.rangeSelector.selected == 3){
+                    time_range = "7 Days";
                 }
-            },
+                this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
+                }
+            }
+          },
 
-			navigator:{
-				enabled: false
-			},
+//          navigator:{
+//            enabled: false
+//          },
 			
-            //Optional?
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 1158
-                    }
-                }]
-            },
-
-            plotOptions: {
-                series: {
-                    animation: false,
-                    states: {
-                        hover: {
-                            enabled: false
-                        }
-                    },
-                    dataGrouping:{
-                        enabled: true
-                    },
-                    connectNulls: false
+          plotOptions: {
+            series: {
+              animation: false,
+              states: {
+                hover: {
+                  enabled: false
                 }
-            },
+              },
+              dataGrouping:{
+                enabled: true
+              },
+              connectNulls: false
+            }
+          },
 
             rangeSelector: {
-                buttonTheme: { // styles for the buttons
-            	    	fill: 'none',
-            	    	stroke: 'none',
-            	    	'stroke-width': 0,
-            		r: 8,
-            		style: {
-                		color: '#FFFFFF',
-                		fontWeight: 'bold'
-            		},
-            		states: {
-                		hover: {
-                		},
-                		select: {
-                    			fill: '#FFFFFF',
-                    			style: {
-                        			color: 'black'
-                    			}
-                		}
-				// disabled: { ... }
-                  	}
-               	},
-                inputBoxBorderColor: 'gray',
-                inputBoxWidth: 120,
-                inputBoxHeight: 18,
-                inputStyle: {
-                   	color: '#FFFFFF',
-                        fontWeight: 'bold'
+
+              buttons: [{
+                  type: 'hour',
+                  count: 3,
+                  text: '3h'
+              }, {
+                  type: 'day',
+                  count: 1,
+                  text: '1d'
+              }, {
+                  type: 'day',
+                  count: 3,
+                  text: '3d'
+              }, {
+                  type: 'day',
+                  count: 7,
+                  text: '7d'
+              }],
+
+              buttonPosition: {
+                 align: 'left'
+              },
+
+              inputPosition: {
+                align: 'right'
+              },
+
+              buttonTheme: {
+                // Sets the basic state of the range selector
+                fill: 'none',
+                stroke: 'none',
+                'stroke-width': 0,
+                r: 8,
+                style: {
+                   color: 'white',
+                   fontWeight: 'bold'
                 },
-                labelStyle: {
-                	color: 'silver',
-                	fontWeight: 'bold'
+
+                // Set the options for each state of the range selector
+                states: {
+                  select: {
+                    fill: '#999',
+                    style: {
+                      color: 'black'
+                    }
+                  },
+                  hover: {
+                    fill: 'white',
+                    style: {
+                      color: 'black'
+                    },
+                  },
                 },
-		selected: 1,
-                buttonPosition: {
-                   align: 'left'
-                },
-                verticalAlign: 'bottom',
-                inputEnabled: true,
-		inputDateFormat: '%Y-%m-%d',
-                buttons: [{
-                    type: 'hour',
-                    count: 3,
-                    text: '3h'
-                }, {
-                    type: 'day',
-                    count: 1,
-                    text: '1d'
-                }, {
-                    type: 'day',
-                    count: 3,
-                    text: '3d'
-                }, {
-                    type: 'day',
-                    count: 7,
-                    text: '7d'
-                }]
+              },
+
+              verticalAlign: 'bottom',
+//              inputEnabled: true,
+//              inputDateFormat: '%Y-%m-%d',
+
+              inputBoxBorderColor: 'gray',
+              inputBoxWidth: 120,
+              inputBoxHeight: 18,
+              inputStyle: {
+                color: '#FFFFFF',
+                fontWeight: 'bold'
+              },
+
+              labelStyle: {
+              	color: 'silver',
+              	fontWeight: 'bold'
+              },
+              selected: 1,
+
             },
 
             tooltip: {
@@ -703,9 +625,9 @@
         }, function(chart){ //on complete function
 
 		// apply the date pickers
-		setTimeout(function() {
-			('input.highcharts-range-selector', $('#' + chart.options.chart.renderTo)).datepicker()
-		}, 0)
+//		setTimeout(function() {
+//			('input.highcharts-range-selector', $('#' + chart.options.chart.renderTo)).datepicker()
+//		}, 0)
                 chart.renderer.text("Verison 1.5", 1090, 845)
                 .css({
                     fontSize: '11px',
@@ -715,216 +637,125 @@
         });  
 
 // ****************** Geospace Model Plots *********************
-           geospaceChart = new Highcharts.StockChart({
+        geospaceChart = new Highcharts.StockChart({
             
-            chart: {
-                renderTo: 'model-container',
-                backgroundColor: '#000000',
-                zoomType: 'xy',
-                plotBorderColor: '#000000',
-                plotBorderWidth: 1, 
-                marginRight:200,
-                events: {
-                    //this is an inefficent reload of data every minute
-                    //this will not work on jsfiddle and will kill your browser
-                    /*load: function() {
-                        //console.log(this.series);
-                        var bzPoints = this.series[0];
-                        var btPoints = this.series[1];
-                        var densePoints = this.series[2];
-                        var tempPoints = this.series[4];
-                        var speedPoints =this.series[3];
-                        var auPoints = this.series[5];
-                        var alPoints = this.series[6];
-                        var gdstPoints = this.series[9];
-                        var gkpPoints = this.series[7];
-                        var swpcPoints = this.series[8];
-                        var kyotoPoints = this.series[10];
-                        setInterval(function(){
-                            $.getJSON('https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json', function (dataRTSW) {
-                                console.log('updating points');
-                                dataRTSW = sortRTSW(dataRTSW.splice(1));
-                                var latestPoint = dataRTSW[dataRTSW.length-1];
-                                var latestTime = Date.parse(latestPoint[11] + 'Z');
-                                console.log(new Date());
-                                for(var i = 30; i >= 0; i--){
-                                    bzPoints.removePoint(bzPoints.data.length - 1);
-                                }
-                                console.log(new Date());
-                                var seriesLatestPoint = bzPoints.data[bzPoints.data.length -1];
-                                console.log("lets update this shit");
+          chart: {
+            renderTo: 'model-container',
+            backgroundColor: bgcolor,
+            zoomType: 'xy',
+            plotBorderColor: border_color,
+            plotBorderWidth: border_width, 
+            marginRight:200,
 
-                                if(latestTime != seriesLatestPoint[0])
-                                {
-                                    var startingindex = dataRTSW.findIndex(findIndexOfPoint, [seriesLatestPoint, 11]);
-                                    if(startingindex >= 0){
-                                        for(var i = startingindex; i < dataRTSW.length; i++){
-
-                                            var latestPoint = dataRTSW[i];
-                                            var latestTime = Date.parse(latestPoint[11] + 'Z');
-
-                                            bzPoints.addPoint([latestTime, parseInt(latestPoint[6])], false, false);
-                                            btPoints.addPoint([latestTime, parseFloat(latestPoint[7])], false, false);
-                                            densePoints.addPoint([latestTime, parseFloat(latestPoint[2])], false, false);
-                                            speedPoints.addPoint([latestTime, parseFloat(latestPoint[1])], false, false);
-                                            tempPoints.addPoint([latestTime, parseFloat(latestPoint[3])],false,false);
-                                        }
-                                        geospaceChart.redraw(); 
-                                        console.log(new Date());
-                                        console.log("le chart has been redrawn");
-                                    }
-                                }
-
-                                
-                            });
-                            $.getJSON('https://services.swpc.noaa.gov/experimental/products/geospace/geomagnetic-indices.json', function(data){
-                                var latestPoint = data[data.length - 1];
-                                var latestTime = Date.parse(latestPoint[0] + 'Z');
-
-                                var seriesLatestPoint = gkpPoints.options.data[gkpPoints.options.data.length -1 ];
-
-                                var gkp
-
-                                if(latestTime !=  seriesLatestPoint[0]){
-
-                                    var startingIndex = data.findIndex(findIndexOfPoint, [seriesLatestPoint,0]);
-                                    if(startingIndex >= 0){
-                                        for(var i = startingIndex; i < data.length; i ++){
-                                            var latestPoint = data[i];
-                                            var latestTime = Date.parse(latestPoint[0] + 'Z');
-                                            gdstPoints.addPoint([latestTime, parseInt(latestPoint[1])],false, false);
-                                            gkpPoints.addPoint([latestTime, parseFloat(latestPoint[2])],false, false); 
-                                            auPoints.addPoint([latestTime, parseInt(latestPoint[3])], false, false);
-                                            alPoints.addPoint([latestTime, parseInt(latestPoint[4])], false,false);
-                                        }
-
-                                        var time = new Date();
-                                        var currentTime = "Current Time: " + time.getUTCFullYear() + "-" + ('0'+String(time.getUTCMonth() +1)).slice(-2) + "-" + 
-                                            ('0'+String(time.getUTCDate())).slice(-2) + " " + ('0'+String(time.getUTCHours())).slice(-2) + ":" + ('0'+String(time.getUTCMinutes())).slice(-2) + " UTC" + "<br/>";
-                                        var validTimeDate = new Date(latestTime);
-                                        var minuteDifference = Math.floor(((validTimeDate.getTime() - time.getTime())/1000)/60);
-                                        var customSubtitle = currentTime + "Valid Time: " + validTimeDate.getUTCFullYear() + "-" + String(validTimeDate.getUTCMonth()+1).padStart(2, '0') +
-                                            "-" + String(validTimeDate.getUTCDate()).padStart(2, '0') + " " + String(validTimeDate.getUTCHours()).padStart(2, '0') + ":" + 
-                                            String(validTimeDate.getUTCMinutes()).padStart(2, '0') + " UTC" + " (" + minuteDifference + " mins ahead)";
-
-                                        geospaceChart.setTitle(null, {text: customSubtitle});
-
-                                        geospaceChart.xAxis[0].options.plotLines[0].value = new Date();
-
-                                        geospaceChart.redraw(); 
-                                    }
-                                }
-
-                            });
-                            
-                            
-                        }, refreshTime);
-                        setInterval(function(){
-                            console.log("full update");
-                            loadJSON(true);
-                        }, hourMillisecs);
-                    },*/
-                    redraw: function(){
-                        var time_range;
-                        if(this.rangeSelector.selected  == 0){
-                            time_range = "3 Hours";
-                        }else if(this.rangeSelector.selected == 1){
-                            time_range = "24 Hours";
-                        }else if(this.rangeSelector.selected == 2){
-                            time_range = "3 Days";
-                        }else if(this.rangeSelector.selected == 3){
-                            time_range = "7 Days";
-                        }
-                       // this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
-                    }
+            events: {
+              redraw: function(){
+                var time_range;
+                if(this.rangeSelector.selected  == 0){
+                    time_range = "3 Hours";
+                }else if(this.rangeSelector.selected == 1){
+                    time_range = "24 Hours";
+                }else if(this.rangeSelector.selected == 2){
+                    time_range = "3 Days";
+                }else if(this.rangeSelector.selected == 3){
+                    time_range = "7 Days";
                 }
-            },
+                this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
+                }
+            }
+          },
 
-			navigator:{
-				enabled: false
-			},
+//          navigator:{
+//            enabled: false
+//          },
 			
-            //Optional?
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 1158
-                    }
-                }]
-            },
-
-            plotOptions: {
-                series: {
-                    animation: false,
-                    states: {
-                        hover: {
-                            enabled: false
-                        }
-                    },
-                    dataGrouping:{
-                        enabled: true
-                    },
-                    connectNulls: false
+          plotOptions: {
+            series: {
+              animation: false,
+              states: {
+                hover: {
+                  enabled: false
                 }
-            },
+              },
+              dataGrouping:{
+                enabled: true
+              },
+              connectNulls: false
+            }
+          },
 
             rangeSelector: {
-                buttonTheme: { // styles for the buttons
-            	    	fill: 'none',
-            	    	stroke: 'none',
-            	    	'stroke-width': 0,
-            		r: 8,
-            		style: {
-                		color: '#FFFFFF',
-                		fontWeight: 'bold'
-            		},
-            		states: {
-                		hover: {
-                		},
-                		select: {
-                    			fill: '#FFFFFF',
-                    			style: {
-                        			color: 'black'
-                    			}
-                		}
-				// disabled: { ... }
-                  	}
-               	},
-                inputBoxBorderColor: 'gray',
-                inputBoxWidth: 120,
-                inputBoxHeight: 18,
-                inputStyle: {
-                   	color: '#FFFFFF',
-                        fontWeight: 'bold'
+
+              buttons: [{
+                  type: 'hour',
+                  count: 3,
+                  text: '3h'
+              }, {
+                  type: 'day',
+                  count: 1,
+                  text: '1d'
+              }, {
+                  type: 'day',
+                  count: 3,
+                  text: '3d'
+              }, {
+                  type: 'day',
+                  count: 7,
+                  text: '7d'
+              }],
+
+              buttonPosition: {
+                 align: 'left'
+              },
+
+              inputPosition: {
+                align: 'right'
+              },
+
+              buttonTheme: {
+                // Sets the basic state of the range selector
+                fill: 'none',
+                stroke: 'none',
+                'stroke-width': 0,
+                r: 8,
+                style: {
+                   color: 'white',
+                   fontWeight: 'bold'
                 },
-                labelStyle: {
-                	color: 'silver',
-                	fontWeight: 'bold'
+
+                // Set the options for each state of the range selector
+                states: {
+                  select: {
+                    fill: '#999',
+                    style: {
+                      color: 'black'
+                    }
+                  },
+                  hover: {
+                    fill: 'white',
+                    style: {
+                      color: 'black'
+                    },
+                  },
                 },
-		selected: 1,
-                buttonPosition: {
-                   align: 'left'
-                },
-                verticalAlign: 'bottom',
-                inputEnabled: true,
-		inputDateFormat: '%Y-%m-%d',
-                buttons: [{
-                    type: 'hour',
-                    count: 3,
-                    text: '3h'
-                }, {
-                    type: 'day',
-                    count: 1,
-                    text: '1d'
-                }, {
-                    type: 'day',
-                    count: 3,
-                    text: '3d'
-                }, {
-                    type: 'day',
-                    count: 7,
-                    text: '7d'
-                }]
+              },
+
+              verticalAlign: 'bottom',
+//              inputEnabled: true,
+//              inputDateFormat: '%Y-%m-%d',
+
+              inputBoxBorderColor: 'gray',
+              inputBoxWidth: 120,
+              inputBoxHeight: 18,
+              inputStyle: {
+                color: '#FFFFFF',
+                fontWeight: 'bold'
+              },
+
+              labelStyle: {
+              	color: 'silver',
+              	fontWeight: 'bold'
+              },
+              selected: 1,
             },
 
             tooltip: {
