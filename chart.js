@@ -869,15 +869,45 @@
             },
 
             rangeSelector: {
-                selected: 1,
+                buttonTheme: { // styles for the buttons
+            	    	fill: 'none',
+            	    	stroke: 'none',
+            	    	'stroke-width': 0,
+            		r: 8,
+            		style: {
+                		color: '#FFFFFF',
+                		fontWeight: 'bold'
+            		},
+            		states: {
+                		hover: {
+                		},
+                		select: {
+                    			fill: '#FFFFFF',
+                    			style: {
+                        			color: 'black'
+                    			}
+                		}
+				// disabled: { ... }
+                  	}
+               	},
+                inputBoxBorderColor: 'gray',
+                inputBoxWidth: 120,
+                inputBoxHeight: 18,
+                inputStyle: {
+                   	color: '#FFFFFF',
+                        fontWeight: 'bold'
+                },
+                labelStyle: {
+                	color: 'silver',
+                	fontWeight: 'bold'
+                },
+		selected: 1,
                 buttonPosition: {
                    align: 'left'
                 },
                 verticalAlign: 'bottom',
-                inputEnabled: false,
-                labelStyle: {
-                    color: '#ffffff'
-                },
+                inputEnabled: true,
+		inputDateFormat: '%Y-%m-%d',
                 buttons: [{
                     type: 'hour',
                     count: 3,
