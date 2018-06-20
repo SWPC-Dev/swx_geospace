@@ -108,11 +108,12 @@
               }],
 
               buttonPosition: {
-                 align: 'left'
+                 align: 'right',
+                 x:-130
               },
 
               inputPosition: {
-                align: 'right'
+                align: 'left'
               },
 
               buttonTheme: {
@@ -149,7 +150,7 @@
 
               inputBoxBorderColor: 'gray',
               inputBoxWidth: 120,
-              inputBoxHeight: 18,
+              inputBoxHeight: 16,
               inputStyle: {
                 color: '#FFFFFF',
                 fontWeight: 'bold'
@@ -159,7 +160,7 @@
               	color: 'silver',
               	fontWeight: 'bold'
               },
-              selected: 1,
+              selected: 3,
 
             },
 
@@ -704,11 +705,12 @@
               }],
 
               buttonPosition: {
-                 align: 'left'
+                 align: 'right',
+                 x:-130
               },
 
               inputPosition: {
-                align: 'right'
+                align: 'left'
               },
 
               buttonTheme: {
@@ -745,7 +747,7 @@
 
               inputBoxBorderColor: 'gray',
               inputBoxWidth: 120,
-              inputBoxHeight: 18,
+              inputBoxHeight: 16,
               inputStyle: {
                 color: '#FFFFFF',
                 fontWeight: 'bold'
@@ -755,7 +757,7 @@
               	color: 'silver',
               	fontWeight: 'bold'
               },
-              selected: 1,
+              selected: 3,
             },
 
             tooltip: {
