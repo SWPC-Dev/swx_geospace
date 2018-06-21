@@ -63,7 +63,7 @@
                 }else if(this.rangeSelector.selected == 3){
                     time_range = "7 Days";
                 }
-                this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
+                this.setTitle({text: "Geospace Timeline: Latest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
                 }
             }
           },
@@ -179,7 +179,7 @@
 
 
             title: {
-                text: '<span>Geospace Timeline: Lastest 24 Hours</span>',
+                text: "Geospace Timeline: Latest 7 Days <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>",
                 style: {"color": "#ffffff", "font-size": "16px", "margin-bottom": "25"},
                 align: 'left',
                 useHTML: true,
@@ -660,7 +660,7 @@
                 }else if(this.rangeSelector.selected == 3){
                     time_range = "7 Days";
                 }
-                this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
+                this.setTitle({text: "Geospace Prediction: Latest "+ time_range + " <br/> <span style='font-size: 12px;'>Model Output and Ground Truth Data</span>"});
                 }
             }
           },
@@ -774,7 +774,7 @@
 
 
             title: {
-                text: '<span> Geospace Model Predicted Kp and Dst (Ground Truth Data: SWPC Kp and Kyoto quick-look Dst) </span>',
+                text: "Geospace Prediction: Latest 7 Days <br/> <span style='font-size: 12px;'> Model Output and Ground Truth Data</span>",
                 style: {"color": "#ffffff", "font-size": "16px", "margin-bottom": "25"},
                 align: 'left',
                 useHTML: true,
