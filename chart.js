@@ -265,8 +265,8 @@
                     minorTickColor: '#ccd6eb',
                     minorTickLength: 0,
                     minorTickWidth: 0,
-                    startOnTick: true,
-                    endOnTick: true,
+                    //startOnTick: true,
+                    //endOnTick: true,
                     minorTickPosition: 'outside',
                     labels: {
                         enabled: false
@@ -286,8 +286,8 @@
                     minorTickColor: '#ccd6eb',
                     minorTickLength: 3,
                     minorTickWidth: 1,
-                    startOnTick: true,
-                    endOnTick: true,
+                    //startOnTick: true,
+                    //endOnTick: true,
                     minorTickPosition: 'inside',
                     labels: {
                         enabled: false
@@ -544,9 +544,50 @@
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'
-
                 },
 
+                //Y Axis 0 - right side
+                {
+                    opposite: true,
+                    top: '0%',
+                    height: '24%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    }  
+                },   
+                //Y Axis 1 - right side
+                {
+                    opposite: true,
+                    top: '26%',
+                    height: '24%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    } 
+                },
+                //Y Axis 2 - right side
+                {
+                    opposite: true,
+                    top: '52%',
+                    height: '24%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    }     
+                },
                 //Y Axis 3 - right side
                 {
                     opposite: true,
@@ -560,7 +601,7 @@
                     labels: {
                         enabled: false
                     }     
-                },
+                }
              
             ], 
 
@@ -1010,7 +1051,7 @@
                     gridLineColor: '#111111',
                     tickAmount: 5,
                     tickInterval: 15,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'
@@ -1037,10 +1078,10 @@
                     min: 0,
                     max: 9,
                     gridLineColor: '#111111',
-                    lineColor: '#ffffff',
+                    lineColor: '#ccd6eb',
                     tickAmount: 11,
                     tickInterval: 1,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'
@@ -1065,11 +1106,54 @@
                     lineWidth: 1,
                     gridLineColor: '#111111',
                     tickAmount: 5,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'
                 },
+
+                //Y Axis 4 - right side
+                {
+                    opposite: true,
+                    top: '0%',
+                    height: '32%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    }  
+                },   
+                //Y Axis 5 - right side
+                {
+                    opposite: true,
+                    top: '34%',
+                    height: '32%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    } 
+                },
+                //Y Axis 6 - right side
+                {
+                    opposite: true,
+                    top: '68%',
+                    height: '32%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    }     
+                }
             ], 
 
             series: [
