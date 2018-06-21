@@ -220,14 +220,14 @@
             }, 
 
             xAxis: [
-                //0 Current Time Line - vertical one
+                //0 Current Time Line - horizontal one on the x Axis
                 {   
                     top: '100%',
                     height: '0%',
                     plotLines: [{
                         value:  new Date(), //currentTime,
                         width: 1,
-                        color: '#2aadf9',
+                        color: '#2aadf9',  //blue current time vertical line
                         label: {
                             text: 'Latest value',
                             align: 'right',
@@ -262,7 +262,7 @@
                     tickPosition: 'outside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 0,
                     minorTickWidth: 0,
                     startOnTick: true,
@@ -283,7 +283,7 @@
                     tickPosition: 'inside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 3,
                     minorTickWidth: 1,
                     startOnTick: true,
@@ -304,7 +304,7 @@
                     tickPosition: 'outside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 0,
                     minorTickWidth: 1,
                     startOnTick: true,
@@ -325,7 +325,7 @@
                     tickPosition: 'inside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 3,
                     minorTickWidth: 1,
                     startOnTick: true,
@@ -346,7 +346,7 @@
                     tickPosition: 'outside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 0,
                     minorTickWidth: 1,
                     startOnTick: true,
@@ -367,12 +367,12 @@
                     tickPosition: 'inside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 3,
                     minorTickWidth: 1,
                     minorTickPosition: 'inside',
                     startOnTick: true,
-                    endOnTick: true,
+                    endOnTick: false,
                     labels: {
                         enabled: false
                     }
@@ -385,15 +385,15 @@
                     linkedTo: 0,
                     tickLength: 0,
                     tickWidth: 1,
-                    tickPosition: 'outside',
+                    tickPosition: 'inside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 0,
                     minorTickWidth: 1,
                     startOnTick: true,
-                    endOnTick: true,
-                    minorTickPosition: 'outside',
+                    endOnTick: false,
+                    minorTickPosition: 'inside',
                     labels: {
                         enabled: false
                     }     
@@ -409,7 +409,7 @@
                     tickPosition: 'inside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 3,
                     minorTickWidth: 1,
                     minorTickPosition: 'inside',
@@ -443,7 +443,7 @@
                     lineWidth: 1,
                     tickAmount: 5,
                     tickInterval: 1,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside',
@@ -473,11 +473,12 @@
                     gridLineColor: '#1A1818',
                     tickAmount: 5,
                     tickInterval: 1,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'            
                 }, 
+
                 
 				//Y Axis 2
                 {
@@ -497,10 +498,10 @@
                     offset: 0,
                     lineWidth: 1,
                     gridLineColor: '#111111',
-                    lineColor: '#ffffff',
+                    lineColor: '#ccd6eb',
                     tickAmount: 5,
                     tickInterval: 10,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'
@@ -536,14 +537,29 @@
                     offset: 0,
                     lineWidth: 1,
                     gridLineColor: '#111111',
-                    lineColor: '#ffffff',
+                    lineColor: '#ccd6eb',
                     tickAmount: 5,
                     tickInterval: 1,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'
 
+                },
+
+                //Y Axis 3 - right side
+                {
+                    opposite: true,
+                    top: '78%',
+                    height: '22%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    }     
                 },
              
             ], 
