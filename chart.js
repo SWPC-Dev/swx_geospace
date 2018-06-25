@@ -1334,7 +1334,7 @@
         var predKpSeries = {name: "Predicted Kp", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1};
         var obsKpSeries = {name: "Observed Kp", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1};
         var currentTime = new Date();
-        currentTime.setHours(currentTime.getHours() + 4);
+        currentTime.setHours(currentTime.getHours() + 24);
 
         $.each(data,function (i, value){
             var time = Date.parse(value[0] +'Z');
@@ -1349,6 +1349,7 @@
            	}
         });
         predKpSeries.data.unshift(obsKpSeries.data[obsKpSeries.data.length-1]);
+        obsKpSeries.data.push(predKpSeries[0]);
         series.push(predKpSeries);
         series.push(obsKpSeries);
 
