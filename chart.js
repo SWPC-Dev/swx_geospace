@@ -1068,7 +1068,7 @@
                     },
                     title: {
 						useHTML: true,
-                        text: '<center><font color="#4ac3c9">SWPC Kp</font><br/><font color="#21f26e">Geospace Kp</font></center><br/>',
+                        text: '<center><font color="#4ac3c9">Observed / </font><font color="#c1f1f2">Predicted Kp</font><br/><font color="#21f26e">Geospace Kp</font></center><br/>',
                         style: {'color': '#21f26e'}//,
                         //offset: 50
                     },
@@ -1239,7 +1239,7 @@
                     data: predKp.data,
                     yAxis: 1,
                     lineWidth: 1,
-                    color: 'red',
+                    color: '#c1f1f2',
                     tooltip: {
                         valueSuffix: "W"
                     },
@@ -1297,7 +1297,7 @@
         $.getJSON('https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json', function (data) {
         var bzSeries = {name: "Bz", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1}; 
         var btSeries = {name: "Bt", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
-        var tempSeries = {name: "Temperature", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};
+        var tempSeries = {name: "Temp", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};
         var densitySeries = {name: "Density", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
         var speedSeries = {name: "Speed", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};  
 
@@ -1387,7 +1387,7 @@
             validTime = gdstSeries.data[gdstSeries.data.length-1][0];
 
                 $.getJSON('https://services.swpc.noaa.gov/experimental/products/kyoto-dst.json', function(data){
-                var kdstSeries = {name: "Kyoto DST", data: [], type: "line", boostThreshold : 50};
+                var kdstSeries = {name: "Kyoto Dst", data: [], type: "line", boostThreshold : 50};
                 $.each(data,function (i, value){
                     // Add X, Y values
                     if(i > 0){
