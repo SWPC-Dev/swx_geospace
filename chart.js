@@ -19,14 +19,15 @@
         var bz = data[0];
         var bt = data[1];
         var density = data[2];
-        var temp = data[4];
         var speed = data[3];
-        var swpcKp = data[5];
-        var au = data[6];
-        var al = data[7];
-        var gdst = data[8];
-        var gkp = data[9];
-        var kdst = data[10];
+        var temp = data[4];
+        var predKp = data[5];
+        var obsKp = data[6];
+        var au = data[7];
+        var al = data[8];
+        var gdst = data[9];
+        var gkp = data[10];
+        var kdst = data[11];
 
 
         // color scheme setup
@@ -265,8 +266,8 @@
                     minorTickColor: '#ccd6eb',
                     minorTickLength: 0,
                     minorTickWidth: 0,
-                    //startOnTick: true,
-                    //endOnTick: true,
+                    startOnTick: true,
+                    endOnTick: true,
                     minorTickPosition: 'outside',
                     labels: {
                         enabled: false
@@ -286,8 +287,8 @@
                     minorTickColor: '#ccd6eb',
                     minorTickLength: 3,
                     minorTickWidth: 1,
-                    //startOnTick: true,
-                    //endOnTick: true,
+                    startOnTick: true,
+                    endOnTick: true,
                     minorTickPosition: 'inside',
                     labels: {
                         enabled: false
@@ -601,7 +602,7 @@
                     labels: {
                         enabled: false
                     }     
-                }
+                },
              
             ], 
 
@@ -1216,9 +1217,9 @@
                     }
                 },
                 {
-                    type: swpcKp.type,
-                    name: swpcKp.name,
-                    data: swpcKp.data,
+                    type: obsKp.type,
+                    name: obsKp.name,
+                    data: obsKp.data,
                     yAxis: 1,
                     lineWidth: 1,
                     color: "#4ac3c9",
@@ -1231,7 +1232,25 @@
                     },
                     step: true
                     
-                },{
+                },
+                {
+                    type: predKp.type,
+                    name: predKp.name,
+                    data: predKp.data,
+                    yAxis: 1,
+                    lineWidth: 1,
+                    color: 'red',
+                    tooltip: {
+                        valueSuffix: "W"
+                    },
+                    marker: {
+                        enabled: true,
+                        radius: 1
+                    },
+                    step: true
+                    
+                },
+                {
                     type: gdst.type,
                     name: gdst.name,
                     data: gdst.data,
@@ -1311,30 +1330,32 @@
             series.push(tempSeries);
         }
 
-        $.getJSON('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json', function(data){
-            var swpcKpSeries = {name: "SWPC KP", data: [], type: "line", boostThreshold : 50}; 
-            $.each(data,function (i, value){
-                // Add X, Y values
-                if(i > 0){
-                    var time = Date.parse(value[0] + 'Z');
-                    var t = 0;
-                      for (j = 0; j < 180; j++) {
-                            t = time + j*60000;
-                            swpcKpSeries.data.push([t, parseFloat(value[1])]);
-                      }
-                }
-            });
+        $.getJSON('https://services.swpc.noaa.gov/products/noaa-planetary-k-index-forecast.json', function (data) {
+        var predKpSeries = {name: "Predicted Kp", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1};
+        var obsKpSeries = {name: "Observed Kp", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1};
+        var currentTime = new Date();
+        currentTime.setHours(currentTime.getHours() + 4);
 
-            if (refreshing) {
-                geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, swpcKpSeries.name)].setData(swpcKpSeries.data, true);
-            }
-            else {
-                series.push(swpcKpSeries);
-            }
+        $.each(data,function (i, value){
+            var time = Date.parse(value[0] +'Z');
+           	if(time <= currentTime){
+           		if(value[2] == 'observed'){
+           			obsKpSeries.data.push([time, parseInt(value[1])]);
+           		}
+           		else{
+                	predKpSeries.data.push([time, parseInt(value[1])]);
+                }
+
+           	}
+        });
+        predKpSeries.data.unshift(obsKpSeries.data[obsKpSeries.data.length-1]);
+        series.push(predKpSeries);
+        series.push(obsKpSeries);
+
 
             $.getJSON('https://services.swpc.noaa.gov/experimental/products/geospace/geomagnetic-indices.json', function(data){
-                var gdstSeries = {name: "Geospace DST", data: [], type: "line", boostThreshold : 50};
-                var gkpSeries = {name: "Geospace KP", data: [], type: "line", boostThreshold : 50}; 
+                var gdstSeries = {name: "Geospace Dst", data: [], type: "line", boostThreshold : 50};
+                var gkpSeries = {name: "Geospace Kp", data: [], type: "line", boostThreshold : 50}; 
                 var auSeries = {name: "AU", data: [], type: "line", boostThreshold : 50};
                 var alSeries = {name: "AL", data: [], type: "line", boostThreshold : 50};
 
