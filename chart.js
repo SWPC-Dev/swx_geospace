@@ -19,14 +19,15 @@
         var bz = data[0];
         var bt = data[1];
         var density = data[2];
-        var temp = data[4];
         var speed = data[3];
-        var swpcKp = data[5];
-        var au = data[6];
-        var al = data[7];
-        var gdst = data[8];
-        var gkp = data[9];
-        var kdst = data[10];
+        var temp = data[4];
+        var predKp = data[5];
+        var obsKp = data[6];
+        var au = data[7];
+        var al = data[8];
+        var gdst = data[9];
+        var gkp = data[10];
+        var kdst = data[11];
 
 
         // color scheme setup
@@ -63,7 +64,7 @@
                 }else if(this.rangeSelector.selected == 3){
                     time_range = "7 Days";
                 }
-                this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
+                this.setTitle({text: "Geospace Timeline: Latest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
                 }
             }
           },
@@ -179,7 +180,7 @@
 
 
             title: {
-                text: '<span>Geospace Timeline: Lastest 24 Hours</span>',
+                text: "Geospace Timeline: Latest 7 Days <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>",
                 style: {"color": "#ffffff", "font-size": "16px", "margin-bottom": "25"},
                 align: 'left',
                 useHTML: true,
@@ -220,14 +221,14 @@
             }, 
 
             xAxis: [
-                //0 Current Time Line - vertical one
+                //0 Current Time Line - horizontal one on the x Axis
                 {   
                     top: '100%',
                     height: '0%',
                     plotLines: [{
                         value:  new Date(), //currentTime,
                         width: 1,
-                        color: '#2aadf9',
+                        color: '#2aadf9',  //blue current time vertical line
                         label: {
                             text: 'Latest value',
                             align: 'right',
@@ -262,7 +263,7 @@
                     tickPosition: 'outside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 0,
                     minorTickWidth: 0,
                     startOnTick: true,
@@ -283,7 +284,7 @@
                     tickPosition: 'inside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 3,
                     minorTickWidth: 1,
                     startOnTick: true,
@@ -304,7 +305,7 @@
                     tickPosition: 'outside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 0,
                     minorTickWidth: 1,
                     startOnTick: true,
@@ -325,7 +326,7 @@
                     tickPosition: 'inside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 3,
                     minorTickWidth: 1,
                     startOnTick: true,
@@ -346,7 +347,7 @@
                     tickPosition: 'outside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 0,
                     minorTickWidth: 1,
                     startOnTick: true,
@@ -367,12 +368,12 @@
                     tickPosition: 'inside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 3,
                     minorTickWidth: 1,
                     minorTickPosition: 'inside',
                     startOnTick: true,
-                    endOnTick: true,
+                    endOnTick: false,
                     labels: {
                         enabled: false
                     }
@@ -385,15 +386,15 @@
                     linkedTo: 0,
                     tickLength: 0,
                     tickWidth: 1,
-                    tickPosition: 'outside',
+                    tickPosition: 'inside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 0,
                     minorTickWidth: 1,
                     startOnTick: true,
-                    endOnTick: true,
-                    minorTickPosition: 'outside',
+                    endOnTick: false,
+                    minorTickPosition: 'inside',
                     labels: {
                         enabled: false
                     }     
@@ -409,7 +410,7 @@
                     tickPosition: 'inside',
                     minorGridLineWidth: 0,
                     minorTickInterval: 'auto',
-                    minorTickColor: '#ffffff',
+                    minorTickColor: '#ccd6eb',
                     minorTickLength: 3,
                     minorTickWidth: 1,
                     minorTickPosition: 'inside',
@@ -443,7 +444,7 @@
                     lineWidth: 1,
                     tickAmount: 5,
                     tickInterval: 1,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside',
@@ -473,11 +474,12 @@
                     gridLineColor: '#1A1818',
                     tickAmount: 5,
                     tickInterval: 1,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'            
                 }, 
+
                 
 				//Y Axis 2
                 {
@@ -497,10 +499,10 @@
                     offset: 0,
                     lineWidth: 1,
                     gridLineColor: '#111111',
-                    lineColor: '#ffffff',
+                    lineColor: '#ccd6eb',
                     tickAmount: 5,
                     tickInterval: 10,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'
@@ -536,14 +538,70 @@
                     offset: 0,
                     lineWidth: 1,
                     gridLineColor: '#111111',
-                    lineColor: '#ffffff',
+                    lineColor: '#ccd6eb',
                     tickAmount: 5,
                     tickInterval: 1,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'
+                },
 
+                //Y Axis 0 - right side
+                {
+                    opposite: true,
+                    top: '0%',
+                    height: '24%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    }  
+                },   
+                //Y Axis 1 - right side
+                {
+                    opposite: true,
+                    top: '26%',
+                    height: '24%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    } 
+                },
+                //Y Axis 2 - right side
+                {
+                    opposite: true,
+                    top: '52%',
+                    height: '24%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    }     
+                },
+                //Y Axis 3 - right side
+                {
+                    opposite: true,
+                    top: '78%',
+                    height: '22%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    }     
                 },
              
             ], 
@@ -660,7 +718,7 @@
                 }else if(this.rangeSelector.selected == 3){
                     time_range = "7 Days";
                 }
-                this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
+                this.setTitle({text: "Geospace Prediction: Latest "+ time_range + " <br/> <span style='font-size: 12px;'>Model Output and Ground Truth Data</span>"});
                 }
             }
           },
@@ -774,7 +832,7 @@
 
 
             title: {
-                text: '<span> Geospace Model Predicted Kp and Dst (Ground Truth Data: SWPC Kp and Kyoto quick-look Dst) </span>',
+                text: "Geospace Prediction: Latest 7 Days <br/> <span style='font-size: 12px;'> Model Output and Ground Truth Data</span>",
                 style: {"color": "#ffffff", "font-size": "16px", "margin-bottom": "25"},
                 align: 'left',
                 useHTML: true,
@@ -994,7 +1052,7 @@
                     gridLineColor: '#111111',
                     tickAmount: 5,
                     tickInterval: 15,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'
@@ -1010,7 +1068,7 @@
                     },
                     title: {
 						useHTML: true,
-                        text: '<center><font color="#4ac3c9">SWPC Kp</font><br/><font color="#21f26e">Geospace Kp</font></center><br/>',
+                        text: '<center><font color="#4ac3c9">Observed / </font><font color="#c1f1f2">Predicted Kp</font><br/><font color="#21f26e">Geospace Kp</font></center><br/>',
                         style: {'color': '#21f26e'}//,
                         //offset: 50
                     },
@@ -1021,10 +1079,10 @@
                     min: 0,
                     max: 9,
                     gridLineColor: '#111111',
-                    lineColor: '#ffffff',
+                    lineColor: '#ccd6eb',
                     tickAmount: 11,
                     tickInterval: 1,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'
@@ -1049,11 +1107,54 @@
                     lineWidth: 1,
                     gridLineColor: '#111111',
                     tickAmount: 5,
-                    tickColor: '#ffffff',
+                    tickColor: '#ccd6eb',
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'
                 },
+
+                //Y Axis 4 - right side
+                {
+                    opposite: true,
+                    top: '0%',
+                    height: '32%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    }  
+                },   
+                //Y Axis 5 - right side
+                {
+                    opposite: true,
+                    top: '34%',
+                    height: '32%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    } 
+                },
+                //Y Axis 6 - right side
+                {
+                    opposite: true,
+                    top: '68%',
+                    height: '32%',
+                    offset: 0,
+                    lineWidth: 1,
+                    lineColor: '#ccd6eb',
+                    tickAmount: 0,
+                  	gridLineColor: '#000000',
+                    labels: {
+                        enabled: false
+                    }     
+                }
             ], 
 
             series: [
@@ -1116,9 +1217,9 @@
                     }
                 },
                 {
-                    type: swpcKp.type,
-                    name: swpcKp.name,
-                    data: swpcKp.data,
+                    type: obsKp.type,
+                    name: obsKp.name,
+                    data: obsKp.data,
                     yAxis: 1,
                     lineWidth: 1,
                     color: "#4ac3c9",
@@ -1131,7 +1232,25 @@
                     },
                     step: true
                     
-                },{
+                },
+                {
+                    type: predKp.type,
+                    name: predKp.name,
+                    data: predKp.data,
+                    yAxis: 1,
+                    lineWidth: 1,
+                    color: '#c1f1f2',
+                    tooltip: {
+                        valueSuffix: "W"
+                    },
+                    marker: {
+                        enabled: true,
+                        radius: 1
+                    },
+                    step: true
+                    
+                },
+                {
                     type: gdst.type,
                     name: gdst.name,
                     data: gdst.data,
@@ -1178,7 +1297,7 @@
         $.getJSON('https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json', function (data) {
         var bzSeries = {name: "Bz", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1}; 
         var btSeries = {name: "Bt", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
-        var tempSeries = {name: "Temperature", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};
+        var tempSeries = {name: "Temp", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};
         var densitySeries = {name: "Density", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
         var speedSeries = {name: "Speed", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};  
 
@@ -1211,30 +1330,33 @@
             series.push(tempSeries);
         }
 
-        $.getJSON('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json', function(data){
-            var swpcKpSeries = {name: "SWPC KP", data: [], type: "line", boostThreshold : 50}; 
-            $.each(data,function (i, value){
-                // Add X, Y values
-                if(i > 0){
-                    var time = Date.parse(value[0] + 'Z');
-                    var t = 0;
-                      for (j = 0; j < 180; j++) {
-                            t = time + j*60000;
-                            swpcKpSeries.data.push([t, parseFloat(value[1])]);
-                      }
-                }
-            });
+        $.getJSON('https://services.swpc.noaa.gov/products/noaa-planetary-k-index-forecast.json', function (data) {
+        var predKpSeries = {name: "Predicted Kp", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1};
+        var obsKpSeries = {name: "Observed Kp", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1};
+        var currentTime = new Date();
+        currentTime.setHours(currentTime.getHours() + 24);
 
-            if (refreshing) {
-                geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, swpcKpSeries.name)].setData(swpcKpSeries.data, true);
-            }
-            else {
-                series.push(swpcKpSeries);
-            }
+        $.each(data,function (i, value){
+            var time = Date.parse(value[0] +'Z');
+           	if(time <= currentTime){
+           		if(value[2] == 'observed'){
+           			obsKpSeries.data.push([time, parseInt(value[1])]);
+           		}
+           		else{
+                	predKpSeries.data.push([time, parseInt(value[1])]);
+                }
+
+           	}
+        });
+        predKpSeries.data.unshift(obsKpSeries.data[obsKpSeries.data.length-1]);
+        obsKpSeries.data.push(predKpSeries[0]);
+        series.push(predKpSeries);
+        series.push(obsKpSeries);
+
 
             $.getJSON('https://services.swpc.noaa.gov/experimental/products/geospace/geomagnetic-indices.json', function(data){
-                var gdstSeries = {name: "Geospace DST", data: [], type: "line", boostThreshold : 50};
-                var gkpSeries = {name: "Geospace KP", data: [], type: "line", boostThreshold : 50}; 
+                var gdstSeries = {name: "Geospace Dst", data: [], type: "line", boostThreshold : 50};
+                var gkpSeries = {name: "Geospace Kp", data: [], type: "line", boostThreshold : 50}; 
                 var auSeries = {name: "AU", data: [], type: "line", boostThreshold : 50};
                 var alSeries = {name: "AL", data: [], type: "line", boostThreshold : 50};
 
@@ -1266,7 +1388,7 @@
             validTime = gdstSeries.data[gdstSeries.data.length-1][0];
 
                 $.getJSON('https://services.swpc.noaa.gov/experimental/products/kyoto-dst.json', function(data){
-                var kdstSeries = {name: "Kyoto DST", data: [], type: "line", boostThreshold : 50};
+                var kdstSeries = {name: "Kyoto Dst", data: [], type: "line", boostThreshold : 50};
                 $.each(data,function (i, value){
                     // Add X, Y values
                     if(i > 0){
