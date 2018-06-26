@@ -180,6 +180,12 @@ $(document).ready(function() {
                 } 
             }, 
 
+            boost: {
+                useGPUTranslations: true,
+                //seriesThreshold: 2 ///doesnt work????
+                enabled:true
+            },
+
 
             title: {
                  text: "Geospace Timeline: Latest 7 Days <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>",
