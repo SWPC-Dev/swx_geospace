@@ -1,15 +1,11 @@
 (function ($) {
 
-    var geospaceChart;
-    var dataChart;
-    var validTime;
-    var dataServiceUrl;
-    var refreshTime = 60000; 
-    var hourMillisecs = 3600000;
-
-
-    //buildCharts();
-    //loadJSON();
+var geospaceChart;
+var dataChart;
+var validTime;
+var dataServiceUrl;
+var refreshTime = 60000; 
+var hourMillisecs = 3600000;
    
 $(document).ready(function() {
     buildCharts();
@@ -22,17 +18,17 @@ $(document).ready(function() {
         var minuteDifference = Math.floor(((validTimeDate.getTime() - time.getTime())/1000)/60);
         var customSubtitle = currentTime + "Valid Time: " + validTimeDate.getUTCFullYear() + "-" + String(validTimeDate.getUTCMonth()+1).padStart(2, '0') + "-" + String(validTimeDate.getUTCDate()).padStart(2, '0') + " " + String(validTimeDate.getUTCHours()).padStart(2, '0') + ":" + String(validTimeDate.getUTCMinutes()).padStart(2, '0') + " UTC" + " (" + minuteDifference + " mins ahead)";
 
-        var bz = {name: "Bz", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1}; 
-        var bt = {name: "Bt", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
-        var density = {name: "Density", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
-        var temp =  {name: "Temperature", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};
-        var speed =  {name: "Speed", data: [], type: "line", boostThreshold : 50, turboThreshold: 1}; 
-        var swpcKp = {name: "SWPC KP", data: [], type: "line", boostThreshold : 50}; 
-        var au = {name: "AU", data: [], type: "line", boostThreshold : 50};
-        var al = {name: "AL", data: [], type: "line", boostThreshold : 50};
-        var gdst = {name: "Geospace DST", data: [], type: "line", boostThreshold : 50};
-        var gkp = {name: "Geospace KP", data: [], type: "line", boostThreshold : 50}; 
-        var kdst = {name: "Kyoto DST", data: [], type: "line", boostThreshold : 50};
+        var bz = {name: "Bz", data: [], type: "line",  boostThreshold : 1}; 
+        var bt = {name: "Bt", data: [], type: "line", boostThreshold : 1,turboThreshold: 1}; 
+        var density = {name: "Density", data: [], type: "line", boostThreshold : 1,turboThreshold: 1}; 
+        var temp =  {name: "Temperature", data: [], type: "line", boostThreshold : 1, turboThreshold: 1};
+        var speed =  {name: "Speed", data: [], type: "line", boostThreshold : 1, turboThreshold: 1}; 
+        var swpcKp = {name: "SWPC KP", data: [], type: "line", boostThreshold : 1}; 
+        var au = {name: "AU", data: [], type: "line", boostThreshold : 1};
+        var al = {name: "AL", data: [], type: "line", boostThreshold : 1};
+        var gdst = {name: "Geospace DST", data: [], type: "line", boostThreshold : 1};
+        var gkp = {name: "Geospace KP", data: [], type: "line", boostThreshold : 1}; 
+        var kdst = {name: "Kyoto DST", data: [], type: "line", boostThreshold : 1};
 
 
         // color scheme setup
@@ -1195,7 +1191,7 @@ $(document).ready(function() {
   
     // Load the JSON and build or refresh the charts
     function loadJSON(refreshing) {
-        
+
         var series = [];
 
         $.getJSON('https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json', function (data) {
@@ -1285,7 +1281,7 @@ $(document).ready(function() {
                 }
             }); 
 
-            //geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, swpcKpSeries.name)].setData(swpcKpSeries.data, true);
+            geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, swpcKpSeries.name)].setData(swpcKpSeries.data, true);
 
         }); // getJSON
     } // LoadJSON
