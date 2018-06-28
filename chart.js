@@ -1,33 +1,35 @@
 (function ($) {
 
-    var geospaceChart;
-    var validTime;
-    var dataServiceUrl;
-    var refreshTime = 60000; 
-    var hourMillisecs = 3600000;
-
-    loadJSON(false);
-
-    function buildCharts(data) {
-
+var geospaceChart;
+var dataChart;
+var validTime;
+var dataServiceUrl;
+var refreshTime = 60000; 
+var hourMillisecs = 3600000;
+   
+$(document).ready(function() {
+    buildCharts();
+    loadJSON();
+    function buildCharts() {
+        //loadJSON();
         var time = new Date();
         var currentTime = "Current Time: " + time.getUTCFullYear() + "-" + ('0'+String(time.getUTCMonth() +1)).slice(-2) + "-" + ('0'+String(time.getUTCDate())).slice(-2) + " " + ('0'+String(time.getUTCHours())).slice(-2) + ":" + ('0'+String(time.getUTCMinutes())).slice(-2) + " UTC" + "<br/>";
         var validTimeDate = new Date(validTime);
         var minuteDifference = Math.floor(((validTimeDate.getTime() - time.getTime())/1000)/60);
         var customSubtitle = currentTime + "Valid Time: " + validTimeDate.getUTCFullYear() + "-" + String(validTimeDate.getUTCMonth()+1).padStart(2, '0') + "-" + String(validTimeDate.getUTCDate()).padStart(2, '0') + " " + String(validTimeDate.getUTCHours()).padStart(2, '0') + ":" + String(validTimeDate.getUTCMinutes()).padStart(2, '0') + " UTC" + " (" + minuteDifference + " mins ahead)";
 
-        var bz = data[0];
-        var bt = data[1];
-        var density = data[2];
-        var speed = data[3];
-        var temp = data[4];
-        var predKp = data[5];
-        var obsKp = data[6];
-        var au = data[7];
-        var al = data[8];
-        var gdst = data[9];
-        var gkp = data[10];
-        var kdst = data[11];
+        var bz = {name: "Bz", data: [], type: "line",  boostThreshold : 1,turboThreshold: 1}; 
+        var bt = {name: "Bt", data: [], type: "line", boostThreshold : 1,turboThreshold: 1}; 
+        var density = {name: "Density", data: [], type: "line", boostThreshold : 1,turboThreshold: 1}; 
+        var temp =  {name: "Temperature", data: [], type: "line", boostThreshold : 1, turboThreshold: 1};
+        var speed =  {name: "Speed", data: [], type: "line", boostThreshold : 1, turboThreshold: 1}; 
+        var predKp = {name: "Predicted Kp", data: [], type: "line",  boostThreshold : 1,turboThreshold: 1};
+        var obsKp = {name: "Observed Kp", data: [], type: "line",  boostThreshold : 1,turboThreshold: 1};
+        var au = {name: "AU", data: [], type: "line", boostThreshold : 1,turboThreshold: 1};
+        var al = {name: "AL", data: [], type: "line", boostThreshold : 1,turboThreshold: 1};
+        var gdst = {name: "Geospace DST", data: [], type: "line", boostThreshold : 1,turboThreshold: 1};
+        var gkp = {name: "Geospace KP", data: [], type: "line", boostThreshold : 1,turboThreshold: 1}; 
+        var kdst = {name: "Kyoto DST", data: [], type: "line", boostThreshold : 1,turboThreshold: 1};
 
 
         // color scheme setup
@@ -64,7 +66,7 @@
                 }else if(this.rangeSelector.selected == 3){
                     time_range = "7 Days";
                 }
-                this.setTitle({text: "Geospace Timeline: Latest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
+                this.setTitle({text: "Geospace Timeline: Lastest "+ time_range + " <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>"});
                 }
             }
           },
@@ -178,9 +180,15 @@
                 } 
             }, 
 
+            boost: {
+                useGPUTranslations: true,
+                //seriesThreshold: 2 ///doesnt work????
+                enabled:true
+            },
+
 
             title: {
-                text: "Geospace Timeline: Latest 7 Days <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>",
+                 text: "Geospace Timeline: Latest 7 Days <br/> <span style='font-size: 12px;'>Solar Wind Predicted at Earth</span>",
                 style: {"color": "#ffffff", "font-size": "16px", "margin-bottom": "25"},
                 align: 'left',
                 useHTML: true,
@@ -479,8 +487,8 @@
                     tickLength: 5,
                     tickPosition: 'inside'            
                 }, 
-
                 
+
 				//Y Axis 2
                 {
                     opposite: false,
@@ -545,7 +553,7 @@
                     tickWidth: 1,
                     tickLength: 5,
                     tickPosition: 'inside'
-                },
+},
 
                 //Y Axis 0 - right side
                 {
@@ -1112,7 +1120,7 @@
                     tickLength: 5,
                     tickPosition: 'inside'
                 },
-
+                
                 //Y Axis 4 - right side
                 {
                     opposite: true,
@@ -1285,81 +1293,84 @@
   
     // Load the JSON and build or refresh the charts
     function loadJSON(refreshing) {
-        console.log('hwllo');
 
         var series = [];
 
-        //var threedays = new Date();
-        //threedays.setDate(threedays.getDate() - 3);
-        //threedays = Date.parse(threedays);
-    
-
         $.getJSON('https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json', function (data) {
-        var bzSeries = {name: "Bz", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1}; 
-        var btSeries = {name: "Bt", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
-        var tempSeries = {name: "Temp", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};
-        var densitySeries = {name: "Density", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
-        var speedSeries = {name: "Speed", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};  
+            var bzSeries = {name: "Bz", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1}; 
+            var btSeries = {name: "Bt", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
+            var tempSeries = {name: "Temperature", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};
+            var densitySeries = {name: "Density", data: [], type: "line", boostThreshold : 50,turboThreshold: 1}; 
+            var speedSeries = {name: "Speed", data: [], type: "line", boostThreshold : 50, turboThreshold: 1};  
 
-        data = sortRTSW(data.splice(1));
-        $.each(data,function (i, value){
-            // Add X, Y values
-            var time = Date.parse(value[11] +'Z');
-           // if(time >= threedays){
+            data = sortRTSW(data.splice(1));
+            
+            $.each(data,function (i, value){
+                // Add X, Y values
+                var time = Date.parse(value[11] +'Z');
+
                 bzSeries.data.push([time, parseFloat(value[6])]);
                 btSeries.data.push([time, parseFloat(value[7])]);
                 densitySeries.data.push([time, parseFloat(value[2])]);
                 speedSeries.data.push([time, parseFloat(value[1])]);
                 tempSeries.data.push([time, parseFloat(value[3])]);
-            //}
 
-        });
+            });
+            
+            dataChart.series[findSeriesPlotIndex(dataChart.series, bzSeries.name)].setData(bzSeries.data, true);
+            dataChart.series[findSeriesPlotIndex(dataChart.series, btSeries.name)].setData(btSeries.data, true);
+            dataChart.series[findSeriesPlotIndex(dataChart.series, densitySeries.name)].setData(densitySeries.data, true);
+            dataChart.series[findSeriesPlotIndex(dataChart.series, speedSeries.name)].setData(speedSeries.data, true);
+            dataChart.series[findSeriesPlotIndex(dataChart.series, tempSeries.name)].setData(tempSeries.data, true);
+            
+        }); //getJSON
 
-        if (refreshing) {
-            geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, bzSeries.name)].setData(bzSeries.data, true);
-            geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, btSeries.name)].setData(btSeries.data, true);
-            geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, densitySeries.name)].setData(densitySeries.data, true);
-            geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, speedSeries.name)].setData(speedSeries.data, true);
-            geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, tempSeries.name)].setData(tempSeries.data, true);
-        }
-        else { 
-            series.push(bzSeries);
-            series.push(btSeries);
-            series.push(densitySeries);
-            series.push(speedSeries);
-            series.push(tempSeries);
-        }
-
-        $.getJSON('https://services.swpc.noaa.gov/products/noaa-planetary-k-index-forecast.json', function (data) {
-        var predKpSeries = {name: "Predicted Kp", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1};
-        var obsKpSeries = {name: "Observed Kp", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1};
-        var currentTime = new Date();
-        currentTime.setHours(currentTime.getHours() + 24);
-
-        $.each(data,function (i, value){
-            var time = Date.parse(value[0] +'Z');
-           	if(time <= currentTime){
-           		if(value[2] == 'observed'){
-           			obsKpSeries.data.push([time, parseInt(value[1])]);
-           		}
-           		else{
-                	predKpSeries.data.push([time, parseInt(value[1])]);
+        $.getJSON('https://services.swpc.noaa.gov/experimental/products/kyoto-dst.json', function(data){
+            var kdstSeries = [];
+            
+            $.each(data,function (i, value){
+                // Add X, Y values
+                if(i > 0){
+                    var time = Date.parse(value[0] + 'Z');
+                    kdstSeries.push([time, parseFloat(value[1])]);
                 }
+            }); 
+            
+            ///i can't just call this. it needs to be inside something????
 
-           	}
+            geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, 'Kyoto DST')].setData(kdstSeries, true);
+
+        }); // getJSON
+        $.getJSON('https://services.swpc.noaa.gov/products/noaa-planetary-k-index-forecast.json', function (data) {
+                var predKpSeries = {name: "Predicted Kp", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1};
+                var obsKpSeries = {name: "Observed Kp", data: [], type: "line",  boostThreshold : 50,turboThreshold: 1};
+                var currentTime = new Date();
+                currentTime.setHours(currentTime.getHours() + 24);
+
+                $.each(data,function (i, value){
+                    var time = Date.parse(value[0] +'Z');
+                    if(time <= currentTime){
+                        if(value[2] == 'observed'){
+                            obsKpSeries.data.push([time, parseInt(value[1])]);
+                        }
+                        else{
+                            predKpSeries.data.push([time, parseInt(value[1])]);
+                        }
+
+                    }
+                });
+                predKpSeries.data.unshift(obsKpSeries.data[obsKpSeries.data.length-1]);
+                obsKpSeries.data.push(predKpSeries[0]);
+                geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, predKpSeries.name)].setData(predKpSeries.data, true);
+                geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, obsKpSeries.name)].setData(obsKpSeries.data, true);
         });
-        predKpSeries.data.unshift(obsKpSeries.data[obsKpSeries.data.length-1]);
-        obsKpSeries.data.push(predKpSeries[0]);
-        series.push(predKpSeries);
-        series.push(obsKpSeries);
 
-
-            $.getJSON('https://services.swpc.noaa.gov/experimental/products/geospace/geomagnetic-indices.json', function(data){
-                var gdstSeries = {name: "Geospace Dst", data: [], type: "line", boostThreshold : 50};
-                var gkpSeries = {name: "Geospace Kp", data: [], type: "line", boostThreshold : 50}; 
-                var auSeries = {name: "AU", data: [], type: "line", boostThreshold : 50};
-                var alSeries = {name: "AL", data: [], type: "line", boostThreshold : 50};
-
+        $.getJSON('https://services.swpc.noaa.gov/experimental/products/geospace/geomagnetic-indices.json', function(data){
+            var gdstSeries = {name: "Geospace DST", data: [], type: "line", boostThreshold : 50};
+            var gkpSeries = {name: "Geospace KP", data: [], type: "line", boostThreshold : 50}; 
+            var auSeries = {name: "AU", data: [], type: "line", boostThreshold : 50};
+            var alSeries = {name: "AL", data: [], type: "line", boostThreshold : 50};
+            
             $.each(data,function (i, value){
                 // Add X, Y values
                 if(i > 0){
@@ -1369,50 +1380,38 @@
                         gkpSeries.data.push([time, parseFloat(value[2])]); //we can keep precision for now
                         auSeries.data.push([time, parseInt(value[3])]);
                         alSeries.data.push([time, parseInt(value[4])]);
-                   // }
+                // }
                 }
-            });
+            }); 
+            
+            geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, auSeries.name)].setData(auSeries.data, true);
+            geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, alSeries.name)].setData(alSeries.data, true);
+            geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, gdstSeries.name)].setData(gdstSeries.data, true);
+            geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, gkpSeries.name)].setData(gkpSeries.data, true);
+            
+            validTime = Date.now()//gdstSeries.data[gdstSeries.data.length-1][0];
 
-            if (refreshing) {
-                geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, auSeries.name)].setData(auSeries.data, true);
-                geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, alSeries.name)].setData(alSeries.data, true);
-                geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, gdstSeries.name)].setData(gdstSeries.data, true);
-                geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, gkpSeries.name)].setData(gkpSeries.data, true);
-            }
-            else {
-                series.push(auSeries);
-                series.push(alSeries);
-                series.push(gdstSeries);
-                series.push(gkpSeries);
-            }
-            validTime = gdstSeries.data[gdstSeries.data.length-1][0];
-
-                $.getJSON('https://services.swpc.noaa.gov/experimental/products/kyoto-dst.json', function(data){
-                var kdstSeries = {name: "Kyoto Dst", data: [], type: "line", boostThreshold : 50};
-                $.each(data,function (i, value){
-                    // Add X, Y values
-                    if(i > 0){
-                      var time = Date.parse(value[0] + 'Z');
-                      var t = 0;
-                      for (j = 0; j < 60; j++) {
-                            t = time + j*60000;
-                            kdstSeries.data.push([t, parseFloat(value[1])]);
-                      }
-                    }
-                });
-
-                if (refreshing){
-                    geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, kdstSeries.name)].setData(kdstSeries.data, true);
-                }
-                else{
-                    series.push(kdstSeries);
-                    buildCharts(series);
-                }
-                }); // getJSON
-            }); // getJSON
+            
         }); // getJSON
-        }); //getJSON
+        /*
+        $.getJSON('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json', function(data){
+            var swpcKpSeries = {name: "SWPC KP", data: [], type: "line", boostThreshold : 50}; 
+
+            
+            $.each(data,function (i, value){
+                // Add X, Y values
+                if(i > 0){
+                    var time = Date.parse(value[0] + 'Z');
+                    swpcKpSeries.data.push([time, parseFloat(value[1])]);
+                }
+            }); 
+
+            geospaceChart.series[findSeriesPlotIndex(geospaceChart.series, swpcKpSeries.name)].setData(swpcKpSeries.data, true);
+
+        }); // getJSON*/
     } // LoadJSON
+
+    
 
     // Find the array index of the series by name
     // needed to call the refresh (setData) function
@@ -1438,5 +1437,5 @@
         return Date.parse(element[this[1]]+"Z") == this[0].x;
     }
     
-
+});
 }(jQuery));
